@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, TextInput, Platform } from 'react-native';
 import BookList from '../components/BookList';
-import { Colors } from '../constants/values';
+import { Colors, Shadow } from '../constants/values';
 
 const BooksScreen = () => {
   return (
@@ -30,17 +30,7 @@ const styles = StyleSheet.create({
     letterSpacing: 2,
     paddingBottom: 50,
     marginBottom: 45,
-    ...Platform.select({
-      ios: {
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.25,
-        shadowRadius: 20,
-        shadowColor: 'rgba(0, 0, 0, 0.25)',
-      },
-      android: {
-        elevation: 5,
-      },
-    }),
+    ...Shadow
   },
   search: {
     position: 'absolute',
@@ -53,17 +43,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     fontSize: 16,
     height: 60,
-    ...Platform.select({
-      ios: {
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.25,
-        shadowRadius: 20,
-        shadowColor: 'rgba(0, 0, 0, 0.25)',
-      },
-      android: {
-        elevation: 5,
-      },
-    }),
+    ...Shadow
   },
   filterOptions: {
     display: 'flex',
