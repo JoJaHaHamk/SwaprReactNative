@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 
-const AddBook = ({ onAddBook }) => {
+const AddBook = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [description, setDescription] = useState('');
@@ -10,15 +10,14 @@ const AddBook = ({ onAddBook }) => {
 
   const handleAddBook = () => {
     // Validate input and send book data to parent component
-    if (title && author && descriptionn && genre) {
-      onAddBook({ title, author, description, genre });
+    if (title && author && description && genre) {
+      // onAddBook({ title, author, description, genre });
     }
   };
 
   return (
-    <View style={styles.container}>
+    <View>
       <TextInput
-        style={styles.input}
         placeholder="Title"
         value={title}
         onChangeText={setTitle}
