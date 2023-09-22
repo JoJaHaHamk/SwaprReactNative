@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import Books from './pages/Books';
+import BooksScreen from './pages/BooksScreen';
 
 const App = () => {
   return (
     <View style={styles.container}>
-      <Books />
+      <BooksScreen />
     </View>
   );
 }
