@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Image } from 'react-native';
-import { Colors, Shadow } from '../constants/values';
+import { Colors } from '../constants/values';
 
 const Navigation = () => {
   return (
@@ -25,9 +25,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: Colors.background,
     paddingHorizontal: 40,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    ...Shadow,
+    borderWidth: 1,
+    borderColor: Colors.lightGray,
   },
   image: {
     opacity: 0.20,
