@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, FlatList, Image, Dimensions } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, Text, FlatList, Image } from 'react-native';
 import { Colors } from '../constants/values';
 
 const BookList = () => {
@@ -12,7 +12,10 @@ const BookList = () => {
     { id: 6, smallThumbnail: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api" },
     { id: 7, smallThumbnail: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api" },
     { id: 8, smallThumbnail: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api" },
-    
+    { id: 9, smallThumbnail: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api" },
+    { id: 10, smallThumbnail: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api" },
+    { id: 11, smallThumbnail: "http://books.google.com/books/content?id=1J2oDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api" },
+    { id: 12, smallThumbnail: "http://books.google.com/books/content?id=1J2oDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api" },
 ]
 
   const renderItem = (item: any) => {
@@ -45,17 +48,17 @@ const styles = StyleSheet.create({
     borderTopColor: Colors.lightGray,
     borderTopWidth: 1,
     flex: 1,
-    paddingLeft: 20,
-    paddingEnd: 20,
+    paddingLeft: 25,
+    paddingEnd: 25,
     paddingTop: 10
   },
   imageContainer: {
     flex: 1/3,
-    margin: 5,
+    margin: 5
   },
   image: {
     borderRadius: 5,
-    aspectRatio: 6 / 9,
+    aspectRatio: 6 / 9
   }
 });
 
