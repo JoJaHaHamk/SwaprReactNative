@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, FlatList, Image } from 'react-native';
+import { View, StyleSheet, FlatList, Image } from 'react-native';
 import { Colors } from '../constants/values';
 
 const BookList = () => {
@@ -45,12 +45,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   list: {
-    borderTopColor: Colors.lightGray,
-    borderTopWidth: 1,
     flex: 1,
     paddingLeft: 25,
     paddingEnd: 25,
-    paddingTop: 10
+    paddingTop: 10,
+    borderTopColor: Colors.lightGray,
+    borderTopWidth: 1,
   },
   imageContainer: {
     flex: 1/3,

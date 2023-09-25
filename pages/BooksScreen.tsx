@@ -22,7 +22,7 @@ const BooksScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   image: {
     height: 120,
@@ -35,12 +35,15 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontFamily: 'Roboto-Bold',
     letterSpacing: 2,
-    paddingBottom: 50,
-    marginBottom: 45,
+    paddingBottom: 50
+  },
+  options: {
+    borderBottomColor: Colors.lightGray,
+    borderBottomWidth: 1,
   },
   search: {
-    position: 'absolute',
-    top: 92,
+    marginTop: -30,
+    marginBottom: 15,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Colors.background,
