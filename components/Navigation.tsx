@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: Colors.background,
     paddingHorizontal: 40,
-    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     ...Shadow,
   },
   image: {
