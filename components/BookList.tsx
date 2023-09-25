@@ -42,7 +42,7 @@ const BookList = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   list: {
     borderTopColor: Colors.lightGray,

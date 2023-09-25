@@ -8,7 +8,7 @@ const BooksScreen = () => {
     <View style={styles.container}>
       <Text style={styles.header}>Books</Text>
       <View style={styles.search}>
-        <TextInput style={styles.input} placeholder="Search for a book" />
+        <TextInput style={styles.input} placeholder="Search for a book" placeholderTextColor="#B8B8B8"  />
         <Image style={styles.searchIcon} source={require('../assets/img/search.png')} />
       </View>
       <View style={styles.filterOptions}>
@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     letterSpacing: 2,
     paddingBottom: 50,
     marginBottom: 45,
-    ...Shadow
   },
   search: {
     position: 'absolute',
@@ -66,7 +65,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: Colors.primary,
     borderRadius: 10,
-    marginBottom: 15
+    marginBottom: 15,
   },
   filterOption: {
     padding: 10,
@@ -74,7 +73,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Medium',
     color: Colors.primary,
     width: '50%',
-    textAlign: 'center',
+    textAlign: 'center'
   },
   selectedOption: {
     backgroundColor: Colors.primary,
