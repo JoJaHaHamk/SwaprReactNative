@@ -4,6 +4,7 @@ import BooksScreen from './pages/BooksScreen';
 import AddBookScreen from './pages/AddBookScreen';
 import ProfilePage from './pages/ProfilePage';
 import EditProfilePage from './pages/EditProfilePage';
+import MatchesPage from './pages/MatchesPage';
 import Navigation from './components/Navigation';
 
 const App = () => {
@@ -11,9 +12,10 @@ const App = () => {
     <View style={styles.container}>
       {/* <BooksScreen /> */}
       {/* <ProfilePage /> */}
-      {/* <Navigation /> */}
+      <MatchesPage />
+      <Navigation />
       {/* <AddBookScreen /> */}
-      <EditProfilePage />
+      {/* <EditProfilePage /> */}
     </View>
   );
 }
