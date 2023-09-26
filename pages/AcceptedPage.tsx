@@ -1,21 +1,17 @@
 import React from 'react';
 import { View, StyleSheet, Text, TextInput, Image } from 'react-native';
-import BookList from '../components/BookList';
+import AcceptedList from '../components/AcceptedList';
 import { Colors, Shadow } from '../constants/values';
 
-const BooksScreen = () => {
+const AcceptedPage = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Books</Text>
+      <Text style={styles.header}>Accepted</Text>
       <View style={styles.search}>
         <TextInput style={styles.input} placeholder="Search for a book" placeholderTextColor="#B8B8B8"  />
         <Image style={styles.searchIcon} source={require('../assets/img/search.png')} />
       </View>
-      <View style={styles.filterOptions}>
-          <Text style={[styles.filterOption, styles.selectedOption, {borderTopLeftRadius: 5, borderBottomLeftRadius: 5}]}>OWNED BOOKS</Text>
-          <Text style={[styles.filterOption, {borderTopRightRadius: 5, borderBottomRightRadius: 5}]}>WANTED BOOKS</Text>
-      </View>
-      <BookList />
+      <AcceptedList />
     </View>
   );
 };
@@ -56,28 +52,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 16,
   },
-  filterOptions: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginLeft: 30,
-    marginRight: 30,
-    borderWidth: 2,
-    borderColor: Colors.primary,
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-  filterOption: {
-    padding: 10,
-    fontSize: 14,
-    fontFamily: 'Roboto-Medium',
-    color: Colors.primary,
-    width: '50%',
-    textAlign: 'center'
-  },
-  selectedOption: {
-    backgroundColor: Colors.primary,
-    color: Colors.onPrimary,
-  }
 });
 
-export default BooksScreen;
+export default AcceptedPage;
