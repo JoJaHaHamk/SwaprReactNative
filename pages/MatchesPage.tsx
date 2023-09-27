@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   distance: {
     alignSelf: 'flex-start',
     marginLeft: 15,
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.secondary,
     height: 50,
     width: 50,
     flexDirection: 'column',
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   number: {
     fontFamily: 'Roboto-Medium',
     color: Colors.onPrimary,
-    fontSize: 14,
+    fontSize: 16,
   },
   unit: {
     fontFamily: 'Roboto-Medium',
