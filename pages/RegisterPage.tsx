@@ -1,123 +1,120 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { Colors, Shadow } from '../constants/values';
+ 
 const RegisterPage = () => {
   return (
-    <View style={styles.dialogBox}>
-      <Text style={styles.heading}>Swapr</Text>
-      <Text style={styles.subHeading}>Register</Text>
-      <View style={styles.inputBox}>
-        <Text style={styles.inputLabel}>EMAIL</Text>
-        <TextInput
-          style={styles.inputField}
-          placeholder="Email"
-        />
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Image source={require('../assets/img/logo.png')} />
       </View>
-      <View style={styles.inputBox}>
-        <Text style={styles.inputLabel}>PASSWORD</Text>
+      <Text style={styles.subHeader}>Register</Text>
+      <View style={styles.form}>
+        <Text style={styles.label}>EMAIL</Text>
         <TextInput
-          style={styles.inputField}
+          style={styles.input}
+          placeholder="Email"
+          placeholderTextColor="#B8B8B8"
+        />
+        <Text style={styles.label}>PASSWORD</Text>
+        <TextInput
+          style={styles.input}
           placeholder="Password"
+          placeholderTextColor="#B8B8B8"
           secureTextEntry
         />
-      </View>
-      <View style={styles.inputBox}>
-        <Text style={styles.inputLabel}>ADDRESS</Text>
+        <Text style={styles.label}>ADDRESS</Text>
         <TextInput
-          style={styles.inputField}
-          placeholder="Address"
-        />
-      </View>
-      <View style={styles.addressBoxes}>
-        <TextInput
-          style={styles.addressBox}
+          style={styles.input}
           placeholder="Visamäentie 21"
+          placeholderTextColor="#B8B8B8"
         />
         <TextInput
-          style={styles.addressBox}
+          style={styles.input}
           placeholder="Hämeenlinna"
+          placeholderTextColor="#B8B8B8"
         />
         <TextInput
-          style={styles.addressBox}
+          style={styles.input}
           placeholder="Finland"
+          placeholderTextColor="#B8B8B8"
         />
-      </View>
-      <TouchableOpacity style={styles.registerButton}>
-        <Text style={styles.registerButtonText}>REGISTER</Text>
-      </TouchableOpacity>
-      <View style={styles.haveAccountBox}>
-        <Text style={styles.haveAccountText}>Have an account?</Text>
+        <View style={styles.options}>
+          <View>
+            <Text style={styles.link}>Have an account?</Text>
+          </View>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>REGISTER</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  dialogBox: {
-    backgroundColor: '#ffffff',
-    borderRadius: 10,
-    padding: 20,
-    elevation: 5, 
-    shadowColor: '#000000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-  },
-  heading: {
-    fontSize: 36,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  subHeading: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  inputBox: {
-    marginBottom: 20,
-  },
-  inputLabel: {
-    marginBottom: 5,
-  },
-  inputField: {
-    backgroundColor: '#f0f0f0',
-    padding: 10,
-    borderRadius: 5,
-  },
-  registerButton: {
-    backgroundColor: '#007BFF',
-    padding: 10,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  registerButtonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  haveAccountBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 10,
-  },
-  haveAccountText: {
-    color: '#007BFF',
-  },
-  addressBoxes: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-  },
-  addressBox: {
-    backgroundColor: '#f0f0f0',
-    padding: 10,
-    borderRadius: 5,
+  container: {
     flex: 1,
-    marginRight: 10,
+    backgroundColor: Colors.primary,
   },
+  header: {
+    backgroundColor: Colors.background,
+    height: 125,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+  },
+  subHeader: {
+    fontSize: 32,
+    marginHorizontal: 45,
+    marginTop: 30,
+    marginBottom: 15,
+    fontFamily: 'Roboto-Bold',
+    color: Colors.onPrimary,
+  },
+  form: {
+    marginHorizontal: 30,
+    padding: 20,
+    borderRadius: 10,
+    backgroundColor: Colors.background,
+    ...Shadow,
+  },
+  input: {
+    fontFamily: 'Roboto-Regular',
+    fontSize: 16,
+    padding: 16,
+    backgroundColor: Colors.background,
+    borderRadius: 10,
+    marginBottom: 15,
+    ...Shadow
+  },
+  label: {
+    fontSize: 16,
+    fontFamily: 'Roboto-Regular',
+    marginBottom: 15,
+  },
+  button: {
+    backgroundColor: Colors.primary,
+    fontSize: 16,
+    padding: 16,
+    paddingHorizontal: 32,
+    borderRadius: 10,
+    alignSelf: 'flex-end',
+  },
+  buttonText: {
+    fontSize: 16,
+    color: Colors.onPrimary,
+    fontFamily: 'Roboto-Medium',
+  },
+  options: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  link: {
+    fontFamily: 'Roboto-Regular',
+    fontSize: 14,
+    textDecorationLine: 'underline',
+  }
 });
 
 export default RegisterPage;
