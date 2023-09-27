@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 16,
     borderRadius: 10,
+    paddingHorizontal: 32,
     marginHorizontal: 20,
     alignSelf: 'flex-end',
   },
