@@ -6,6 +6,8 @@ import ProfilePage from './pages/ProfilePage';
 import EditProfilePage from './pages/EditProfilePage';
 import MatchesPage from './pages/MatchesPage';
 import AcceptedPage from './pages/AcceptedPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import Navigation from './components/Navigation';
 
 const App = () => {
@@ -13,11 +15,13 @@ const App = () => {
     <View style={styles.container}>
       {/* <BooksScreen /> */}
       {/* <ProfilePage /> */}
-      <MatchesPage />
+      {/* <MatchesPage /> */}
       {/* <AcceptedPage /> */}
-      <Navigation />
+      {/* <Navigation /> */}
       {/* <AddBookScreen /> */}
       {/* <EditProfilePage /> */}
+      {/* <LoginPage /> */}
+      <RegisterPage />
     </View>
   );
 }
