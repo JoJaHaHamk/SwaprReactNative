@@ -13,8 +13,8 @@ const App = () => {
     <View style={styles.container}>
       {/* <BooksScreen /> */}
       {/* <ProfilePage /> */}
-      {/* <MatchesPage /> */}
-      <AcceptedPage />
+      <MatchesPage />
+      {/* <AcceptedPage /> */}
       <Navigation />
       {/* <AddBookScreen /> */}
       {/* <EditProfilePage /> */}
