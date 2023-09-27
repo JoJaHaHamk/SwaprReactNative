@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, FlatList, Image, Text, TouchableOpacity } from 'react-native';
-import { Colors } from '../constants/values';
+import { Colors, Shadow } from '../constants/values';
 
 const AcceptedList = () => {
   const accepted = [
@@ -15,20 +15,22 @@ const AcceptedList = () => {
         <Image 
           source={{uri: item.smallThumbnail}}
           style={styles.image} resizeMode='stretch' />
-        <View>
-          <View>
-            <View>
-              <Text>3.2</Text>
-              <Text>km</Text>
-            </View>
+        <View style={styles.info}>
+          <View style={styles.topInfo}>
             <Image source={require('../assets/img/swap.png')} />
+            <View style={styles.distance}>
+              <Text style={styles.number}>3.2</Text>
+              <Text style={styles.unit}>km</Text>
+            </View>
           </View>
-          <TouchableOpacity>
-            <Text>CONTACT</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text>CONCLUDE</Text>
-          </TouchableOpacity>
+          <View style={styles.buttons}>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>CONTACT</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>CONCLUDE</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <Image 
           source={{uri: item.smallThumbnail2}}
@@ -56,7 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 25,
     paddingEnd: 25,
-    paddingTop: 10,
+    paddingTop: 15,
     borderTopColor: Colors.lightGray,
     borderTopWidth: 1,
   },
@@ -64,11 +66,61 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 15,
+    backgroundColor: Colors.background,
+    ...Shadow
+  },
+  info: {
+    flex: 1/3,
+    padding: 10,
+  },
+  topInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  buttons: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-end'
+  },
+  button: {
+    backgroundColor: Colors.primary,
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  buttonText: {
+    textAlign: 'center',
+    fontFamily: 'Roboto-Medium',
+    fontSize: 12,
+    color: Colors.onPrimary,
   },
   image: {
     borderRadius: 5,
     aspectRatio: 6 / 9,
-    height: 150,
+    flex: 1/3
+  },
+  distance: {
+    alignSelf: 'flex-start',
+    marginTop: 5,
+    marginRight: 5,
+    backgroundColor: Colors.secondary,
+    height: 50,
+    width: 50,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+  },
+  number: {
+    fontFamily: 'Roboto-Medium',
+    color: Colors.onPrimary,
+    fontSize: 16,
+  },
+  unit: {
+    fontFamily: 'Roboto-Medium',
+    color: Colors.onPrimary,
+    fontSize: 10,
   }
 });
 

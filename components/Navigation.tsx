@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     opacity: 0.20,
   },
   plus: {
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.secondary,
     padding: 18,
     borderRadius: 50,
     marginTop: -65,
