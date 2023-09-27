@@ -10,19 +10,19 @@ const MatchesPage = () => {
     <View style={styles.container}>
       <Text style={styles.header}>Matches</Text>
       <View style={styles.card}>
-        <Image source={{uri: wanted.smallThumbnail}} />
-        <View>
-          <View>
-            <Image source={require('../assets/img/swap.png')} />
-            <Image source={require('../assets/img/cancel.png')} />
+        <Image style={styles.wanted} source={{uri: wanted.smallThumbnail}} resizeMode='stretch' />
+        <View style={styles.options}>
+          <View style={styles.option}>
+            <Image style={styles.swap} source={require('../assets/img/swap.png')} />
+            <Image style={styles.cancel} source={require('../assets/img/cancel.png')} />
           </View>
-          <Image source={{uri: owned.smallThumbnail}} />
-          <View>
-            <View>
-              <Text>3.2</Text>
-              <Text>km</Text>
+          <Image style={styles.owned} source={{uri: owned.smallThumbnail}} resizeMode='stretch' />
+          <View style={styles.option}>
+            <View style={styles.distance}>
+              <Text style={styles.number}>3.2</Text>
+              <Text style={styles.unit}>km</Text>
             </View>
-            <Image source={require('../assets/img/accept.png')} />
+            <Image style={styles.accept} source={require('../assets/img/accept.png')} />
           </View>
         </View>
       </View>
@@ -47,13 +47,70 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: -30,
     marginBottom: 45,
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: Colors.background,
     borderRadius: 10,
     marginHorizontal: 40,
     ...Shadow,
   },
+  wanted: {
+    flex: 1,
+    borderRadius: 5,
+    margin: 30,
+    marginBottom: 15,
+    aspectRatio: 6 / 9
+  },
+  owned: {
+    flex: 1/3,
+    marginBottom: 25,
+    borderRadius: 5,
+    aspectRatio: 6 / 9,
+  },
+  options: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  option: {
+    flex: 1/3,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  swap: {
+    alignSelf: 'flex-end',
+    marginRight: 15,
+  },
+  cancel: {
+    alignSelf: 'flex-start',
+    marginLeft: 15,
+    marginBottom: 15,
+  },
+  distance: {
+    alignSelf: 'flex-start',
+    marginLeft: 15,
+    backgroundColor: Colors.primary,
+    height: 50,
+    width: 50,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+  },
+  accept: {
+    alignSelf: 'flex-end',
+    marginRight: 15,
+    marginBottom: 15,
+  },
+  number: {
+    fontFamily: 'Roboto-Medium',
+    color: Colors.onPrimary,
+    fontSize: 14,
+  },
+  unit: {
+    fontFamily: 'Roboto-Medium',
+    color: Colors.onPrimary,
+    fontSize: 10,
+  }
 });
 
 export default MatchesPage;
