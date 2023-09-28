@@ -7,22 +7,24 @@ interface NavigationProps {
 }
 
 const Navigation = ({params}: NavigationProps) => {
+  const currentPage = params.route.name;
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={()=>params.navigation.navigate("Home")}>
-        <Image style={[styles.image, styles.active]} source={require('../assets/img/home.png')} />
+      <TouchableOpacity onPress={()=>params.navigation.navigate("Books")}>
+        <Image style={[styles.image, currentPage === "Books" ? styles.active : null]} source={require('../assets/img/home.png')} />
       </TouchableOpacity>
       <TouchableOpacity onPress={()=>params.navigation.navigate("Matches")}>
-        <Image style={styles.image} source={require('../assets/img/matches.png')} />
+        <Image style={[styles.image, currentPage === "Matches" ? styles.active : null]} source={require('../assets/img/matches.png')} />
       </TouchableOpacity>
       <View style={styles.plus}>
         <Image source={require('../assets/img/plus.png')} />
       </View>
       <TouchableOpacity onPress={()=>params.navigation.navigate("Accepted")}>
-        <Image style={styles.image} source={require('../assets/img/accepted.png')} />
+        <Image style={[styles.image, currentPage === "Accepted" ? styles.active : null]} source={require('../assets/img/accepted.png')} />
       </TouchableOpacity>
       <TouchableOpacity onPress={()=>params.navigation.navigate("Profile")}>
-        <Image style={styles.image} source={require('../assets/img/profile.png')} />
+        <Image style={[styles.image, currentPage === "Profile" ? styles.active : null]} source={require('../assets/img/profile.png')} />
       </TouchableOpacity>
     </View>
   );

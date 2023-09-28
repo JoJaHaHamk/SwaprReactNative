@@ -10,14 +10,16 @@ import MatchesPage from './pages/MatchesPage';
 import AcceptedPage from './pages/AcceptedPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import Navigation from './components/Navigation';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Books">
+      <Stack.Navigator 
+        initialRouteName="Books"
+        screenOptions={{headerShown: false, animation: 'none'}}
+      >
         <Stack.Screen name="Books" component={BooksPage} />
         <Stack.Screen name="AddBook" component={AddBookPage} />
         <Stack.Screen name="Matches" component={MatchesPage} />
