@@ -4,7 +4,7 @@ import AcceptedList from '../components/AcceptedList';
 import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
 
-const AcceptedPage = () => {
+const AcceptedPage = (props: any) => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -15,7 +15,7 @@ const AcceptedPage = () => {
         </View>
         <AcceptedList />
       </View>
-      <Navigation />
+      <Navigation params={props} />
     </View>
   );
 };

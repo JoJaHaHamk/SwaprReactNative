@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
 
-const ProfilePage = () => {
+const ProfilePage = (props: any) => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -34,7 +34,7 @@ const ProfilePage = () => {
           </TouchableOpacity>
         </View>
       </View>
-      <Navigation />
+      <Navigation params={props} />
     </View>
   );
 };

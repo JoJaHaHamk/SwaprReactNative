@@ -1,17 +1,29 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Colors } from '../constants/values';
 
-const Navigation = () => {
+interface NavigationProps {
+  params: any;
+}
+
+const Navigation = ({params}: NavigationProps) => {
   return (
     <View style={styles.container}>
-      <Image style={[styles.image, styles.active]} source={require('../assets/img/home.png')} />
-      <Image style={styles.image} source={require('../assets/img/matches.png')} />
+      <TouchableOpacity onPress={()=>params.navigation.navigate("Home")}>
+        <Image style={[styles.image, styles.active]} source={require('../assets/img/home.png')} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={()=>params.navigation.navigate("Matches")}>
+        <Image style={styles.image} source={require('../assets/img/matches.png')} />
+      </TouchableOpacity>
       <View style={styles.plus}>
         <Image source={require('../assets/img/plus.png')} />
       </View>
-      <Image style={styles.image} source={require('../assets/img/accepted.png')} />
-      <Image style={styles.image} source={require('../assets/img/profile.png')} />
+      <TouchableOpacity onPress={()=>params.navigation.navigate("Accepted")}>
+        <Image style={styles.image} source={require('../assets/img/accepted.png')} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={()=>params.navigation.navigate("Profile")}>
+        <Image style={styles.image} source={require('../assets/img/profile.png')} />
+      </TouchableOpacity>
     </View>
   );
 };

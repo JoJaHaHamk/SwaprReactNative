@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, Image } from 'react-native';
 import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
 
-const MatchesPage = () => {
+const MatchesPage = (props: any) => {
   const wanted = { id: 1, smallThumbnail: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api" }
   const owned = { id: 12, smallThumbnail: "http://books.google.com/books/content?id=1J2oDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api" }
 
@@ -29,7 +29,7 @@ const MatchesPage = () => {
           </View>
         </View>
       </View>
-      <Navigation />
+      <Navigation params={props} />
     </View>
   );
 };

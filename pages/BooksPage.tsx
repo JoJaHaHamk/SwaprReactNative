@@ -4,7 +4,7 @@ import BookList from '../components/BookList';
 import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
 
-const BooksPage = () => {
+const BooksPage = (props: any) => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -19,7 +19,7 @@ const BooksPage = () => {
         </View>
         <BookList />
       </View>
-      <Navigation />
+      <Navigation params={props} />
     </View>
   );
 };
