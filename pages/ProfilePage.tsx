@@ -1,36 +1,40 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
 
-const ProfilePage = () => {
+const ProfilePage = (props: any) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Profile</Text>
-      <View style={styles.profileBox}>
-        <View style={styles.profileInfo}>
-          <Image source={require('../assets/img/profile_picture.png')} />
-          <Text style={styles.name}>Hans Zimmer</Text>
-          <Text style={styles.address}>Visamäentie 21, Hämeenlinna, Finland</Text>
+      <View style={styles.content}>
+        <Text style={styles.header}>Profile</Text>
+        <View style={styles.profileBox}>
+          <View style={styles.profileInfo}>
+            <Image source={require('../assets/img/profile_picture.png')} />
+            <Text style={styles.name}>Hans Zimmer</Text>
+            <Text style={styles.address}>Visamäentie 21, Hämeenlinna, Finland</Text>
+          </View>
+          <View style={styles.profileOptions}>
+            <Image source={require('../assets/img/logout.png')} />
+            <Image style={styles.edit} source={require('../assets/img/edit.png')} />
+          </View>
         </View>
-        <View style={styles.profileOptions}>
-          <Image source={require('../assets/img/logout.png')} />
-          <Image style={styles.edit} source={require('../assets/img/edit.png')} />
+        <View style={styles.section}>
+          <Text style={styles.sectionHeading}>SETTINGS</Text>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Notification Settings</Text>
+            <Image source={require('../assets/img/arrow.png')} />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.sectionHeading}>MORE</Text>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>History</Text>
+            <Image source={require('../assets/img/arrow.png')} />
+          </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.section}>
-        <Text style={styles.sectionHeading}>SETTINGS</Text>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Notification Settings</Text>
-          <Image source={require('../assets/img/arrow.png')} />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.section}>
-        <Text style={styles.sectionHeading}>MORE</Text>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>History</Text>
-          <Image source={require('../assets/img/arrow.png')} />
-        </TouchableOpacity>
-      </View>
+      <Navigation params={props} />
     </View>
   );
 };
@@ -38,6 +42,9 @@ const ProfilePage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  content: {
+    flex: 1
   },
   header: {
     backgroundColor: Colors.primary,

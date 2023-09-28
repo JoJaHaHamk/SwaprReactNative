@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   list: {
-    flex: 1,
     paddingLeft: 25,
     paddingEnd: 25,
     paddingTop: 10,

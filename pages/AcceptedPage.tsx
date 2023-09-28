@@ -1,23 +1,30 @@
 import React from 'react';
 import { View, StyleSheet, Text, TextInput, Image } from 'react-native';
 import AcceptedList from '../components/AcceptedList';
+import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
 
-const AcceptedPage = () => {
+const AcceptedPage = (props: any) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Accepted</Text>
-      <View style={styles.search}>
-        <TextInput style={styles.input} placeholder="Search for a book" placeholderTextColor="#B8B8B8"  />
-        <Image style={styles.searchIcon} source={require('../assets/img/search.png')} />
+      <View style={styles.content}>
+        <Text style={styles.header}>Accepted</Text>
+        <View style={styles.search}>
+          <TextInput style={styles.input} placeholder="Search for a book" placeholderTextColor="#B8B8B8"  />
+          <Image style={styles.searchIcon} source={require('../assets/img/search.png')} />
+        </View>
+        <AcceptedList />
       </View>
-      <AcceptedList />
+      <Navigation params={props} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+  },
+  content: {
     flex: 1
   },
   header: {

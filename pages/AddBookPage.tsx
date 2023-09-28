@@ -1,15 +1,17 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet, Image } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Colors, Shadow } from '../constants/values'; 
 import BookList from '../components/BookList';
 import DropDown from '../components/DropDown';
 
-const AddBookScreen = () => {
+const AddBookPage = (props: any) => {
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
         <Text style={styles.header}>Add Book</Text>
-        <Image style={styles.image} source={require('../assets/img/back.png')} />
+        <TouchableOpacity onPress={()=>props.navigation.navigate("Books")} activeOpacity={1}>
+          <Image style={styles.image} source={require('../assets/img/back.png')} />
+        </TouchableOpacity>
       </View>
       <View style={styles.form}>
         <View style={styles.search}>
@@ -99,4 +101,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddBookScreen;
+export default AddBookPage;

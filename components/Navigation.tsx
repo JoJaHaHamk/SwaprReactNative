@@ -1,17 +1,31 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Colors } from '../constants/values';
 
-const Navigation = () => {
+interface NavigationProps {
+  params: any;
+}
+
+const Navigation = ({params}: NavigationProps) => {
+  const currentPage = params.route.name;
+
   return (
     <View style={styles.container}>
-      <Image style={[styles.image, styles.active]} source={require('../assets/img/home.png')} />
-      <Image style={styles.image} source={require('../assets/img/matches.png')} />
-      <View style={styles.plus}>
+      <TouchableOpacity onPress={()=>params.navigation.navigate("Books")}>
+        <Image style={[styles.image, currentPage === "Books" ? styles.active : null]} source={require('../assets/img/home.png')} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={()=>params.navigation.navigate("Matches")}>
+        <Image style={[styles.image, currentPage === "Matches" ? styles.active : null]} source={require('../assets/img/matches.png')} />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.plus} onPress={()=>params.navigation.navigate("AddBook")} activeOpacity={1}>
         <Image source={require('../assets/img/plus.png')} />
-      </View>
-      <Image style={styles.image} source={require('../assets/img/accepted.png')} />
-      <Image style={styles.image} source={require('../assets/img/profile.png')} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={()=>params.navigation.navigate("Accepted")}>
+        <Image style={[styles.image, currentPage === "Accepted" ? styles.active : null]} source={require('../assets/img/accepted.png')} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={()=>params.navigation.navigate("Profile")}>
+        <Image style={[styles.image, currentPage === "Profile" ? styles.active : null]} source={require('../assets/img/profile.png')} />
+      </TouchableOpacity>
     </View>
   );
 };
