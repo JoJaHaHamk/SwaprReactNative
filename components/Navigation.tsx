@@ -17,9 +17,9 @@ const Navigation = ({params}: NavigationProps) => {
       <TouchableOpacity onPress={()=>params.navigation.navigate("Matches")}>
         <Image style={[styles.image, currentPage === "Matches" ? styles.active : null]} source={require('../assets/img/matches.png')} />
       </TouchableOpacity>
-      <View style={styles.plus}>
+      <TouchableOpacity style={styles.plus} onPress={()=>params.navigation.navigate("AddBook")} activeOpacity={1}>
         <Image source={require('../assets/img/plus.png')} />
-      </View>
+      </TouchableOpacity>
       <TouchableOpacity onPress={()=>params.navigation.navigate("Accepted")}>
         <Image style={[styles.image, currentPage === "Accepted" ? styles.active : null]} source={require('../assets/img/accepted.png')} />
       </TouchableOpacity>
