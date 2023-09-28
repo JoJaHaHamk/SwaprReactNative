@@ -9,8 +9,16 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
 import java.util.List;
+// added for stack navigation
+import android.os.Bundle;
 
 public class MainApplication extends Application implements ReactApplication {
+
+  // added for stack navigation
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(null);
+  }
 
   private final ReactNativeHost mReactNativeHost =
       new DefaultReactNativeHost(this) {

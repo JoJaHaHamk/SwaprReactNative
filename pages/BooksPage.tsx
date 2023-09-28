@@ -1,21 +1,25 @@
 import React from 'react';
 import { View, StyleSheet, Text, TextInput, Image } from 'react-native';
 import BookList from '../components/BookList';
+import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
 
-const BooksScreen = () => {
+const BooksPage = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Books</Text>
-      <View style={styles.search}>
-        <TextInput style={styles.input} placeholder="Search for a book" placeholderTextColor="#B8B8B8"  />
-        <Image style={styles.searchIcon} source={require('../assets/img/search.png')} />
+      <View style={styles.content}>
+        <Text style={styles.header}>Books</Text>
+        <View style={styles.search}>
+          <TextInput style={styles.input} placeholder="Search for a book" placeholderTextColor="#B8B8B8"  />
+          <Image style={styles.searchIcon} source={require('../assets/img/search.png')} />
+        </View>
+        <View style={styles.filterOptions}>
+            <Text style={[styles.filterOption, styles.selectedOption, {borderTopLeftRadius: 5, borderBottomLeftRadius: 5}]}>OWNED BOOKS</Text>
+            <Text style={[styles.filterOption, {borderTopRightRadius: 5, borderBottomRightRadius: 5}]}>WANTED BOOKS</Text>
+        </View>
+        <BookList />
       </View>
-      <View style={styles.filterOptions}>
-          <Text style={[styles.filterOption, styles.selectedOption, {borderTopLeftRadius: 5, borderBottomLeftRadius: 5}]}>OWNED BOOKS</Text>
-          <Text style={[styles.filterOption, {borderTopRightRadius: 5, borderBottomRightRadius: 5}]}>WANTED BOOKS</Text>
-      </View>
-      <BookList />
+      <Navigation />
     </View>
   );
 };
@@ -23,6 +27,9 @@ const BooksScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  content: {
+    flex: 1,
   },
   header: {
     backgroundColor: Colors.primary,
@@ -80,4 +87,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default BooksScreen;
+export default BooksPage;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
+import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
 
 const MatchesPage = () => {
@@ -8,30 +9,36 @@ const MatchesPage = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Matches</Text>
-      <View style={styles.card}>
-        <Image style={styles.wanted} source={{uri: wanted.smallThumbnail}} resizeMode='stretch' />
-        <View style={styles.options}>
-          <View style={styles.option}>
-            <Image style={styles.swap} source={require('../assets/img/swap.png')} />
-            <Image style={styles.cancel} source={require('../assets/img/cancel.png')} />
-          </View>
-          <Image style={styles.owned} source={{uri: owned.smallThumbnail}} resizeMode='stretch' />
-          <View style={styles.option}>
-            <View style={styles.distance}>
-              <Text style={styles.number}>3.2</Text>
-              <Text style={styles.unit}>km</Text>
+      <View style={styles.content}>
+        <Text style={styles.header}>Matches</Text>
+        <View style={styles.card}>
+          <Image style={styles.wanted} source={{uri: wanted.smallThumbnail}} resizeMode='stretch' />
+          <View style={styles.options}>
+            <View style={styles.option}>
+              <Image style={styles.swap} source={require('../assets/img/swap.png')} />
+              <Image style={styles.cancel} source={require('../assets/img/cancel.png')} />
             </View>
-            <Image style={styles.accept} source={require('../assets/img/accept.png')} />
+            <Image style={styles.owned} source={{uri: owned.smallThumbnail}} resizeMode='stretch' />
+            <View style={styles.option}>
+              <View style={styles.distance}>
+                <Text style={styles.number}>3.2</Text>
+                <Text style={styles.unit}>km</Text>
+              </View>
+              <Image style={styles.accept} source={require('../assets/img/accept.png')} />
+            </View>
           </View>
         </View>
       </View>
+      <Navigation />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+  },
+  content: {
     flex: 1
   },
   header: {

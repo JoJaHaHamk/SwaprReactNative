@@ -4,7 +4,7 @@ import { Colors, Shadow } from '../constants/values';
 import BookList from '../components/BookList';
 import DropDown from '../components/DropDown';
 
-const AddBookScreen = () => {
+const AddBookPage = () => {
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
@@ -99,4 +99,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddBookScreen;
+export default AddBookPage;
