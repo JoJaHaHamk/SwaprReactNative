@@ -49,7 +49,7 @@ export default class BookService {
 
 			return await response.json();
 		} catch (error) {
-			// Handle the error here
+			
 		}
 	}
 }
