@@ -6,7 +6,7 @@ const url = _api + '/books';
 const token = localStorage.getItem('token');
 
 export default class BookService {
-    // ... (existing methods)
+    
 
     async addToOwnedList(bookId) {
         try {
@@ -36,7 +36,7 @@ export default class BookService {
 
             return await response.json();
         } catch (error) {
-            // Handle the error here
+            
         }
     }
 }
