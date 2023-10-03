@@ -1,20 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Colors, Shadow } from '../constants/values';
+import AuthService from '../modules/services/AuthService';
  
 const RegisterPage = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [address, setAddress] = useState('');
+  const [city, setCity] = useState('');
+  const [country, setCountry] = useState('');
+
+  const authService = new AuthService();
+
+  const handleRegister = async () => {
+    const success = await authService.register(name, email, password, address, city, country);
+
+    if (success) {
+      console.log('success');
+    } else {
+      console.log('error');
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Image source={require('../assets/img/logo.png')} />
-      </View>
-      <Text style={styles.subHeader}>Register</Text>
+      <Text style={styles.header}>Register</Text>
       <View style={styles.form}>
+        <Text style={styles.label}>NAME</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Name"
+          placeholderTextColor="#B8B8B8"
+          value={name}
+          onChangeText={(text) => setName(text)}
+        />
         <Text style={styles.label}>EMAIL</Text>
         <TextInput
           style={styles.input}
           placeholder="Email"
           placeholderTextColor="#B8B8B8"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
         />
         <Text style={styles.label}>PASSWORD</Text>
         <TextInput
@@ -22,28 +49,36 @@ const RegisterPage = () => {
           placeholder="Password"
           placeholderTextColor="#B8B8B8"
           secureTextEntry
+          value={password}
+          onChangeText={(text) => setPassword(text)}
         />
         <Text style={styles.label}>ADDRESS</Text>
         <TextInput
           style={styles.input}
           placeholder="Visamäentie 21"
           placeholderTextColor="#B8B8B8"
+          value={address}
+          onChangeText={(text) => setAddress(text)}
         />
         <TextInput
           style={styles.input}
           placeholder="Hämeenlinna"
           placeholderTextColor="#B8B8B8"
+          value={city}
+          onChangeText={(text) => setCity(text)}
         />
         <TextInput
           style={styles.input}
           placeholder="Finland"
           placeholderTextColor="#B8B8B8"
+          value={country}
+          onChangeText={(text) => setCountry(text)}
         />
         <View style={styles.options}>
           <View>
             <Text style={styles.link}>Have an account?</Text>
           </View>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={handleRegister}>
             <Text style={styles.buttonText}>REGISTER</Text>
           </TouchableOpacity>
         </View>
@@ -58,13 +93,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   header: {
-    backgroundColor: Colors.background,
-    height: 125,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-  },
-  subHeader: {
     fontSize: 32,
     marginHorizontal: 45,
     marginTop: 30,
