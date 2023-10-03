@@ -11,11 +11,11 @@ export default class AuthService {
       },
       body: JSON.stringify({ email, password }),
     });
-    const data = await response.json();
 
     if (response.status === 200) {
+      const data = await response.json();
       await AsyncStorage.setItem('token', data.token);
-      await AsyncStorage.setItem('userId', data.userId);
+      await AsyncStorage.setItem('userId', data.userId.toString());
       return true;
     } else {
       return false;

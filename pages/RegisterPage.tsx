@@ -16,7 +16,6 @@ const RegisterPage = (props: any) => {
 
   const handleRegister = async () => {
     const success = await authService.register(name, email, password, address, city, country);
-
     if (success) {
       props.navigation.navigate("Login");
     } else {
@@ -83,7 +82,7 @@ const RegisterPage = (props: any) => {
             <Text style={styles.buttonText}>REGISTER</Text>
           </TouchableOpacity>
         </View>
-        {error ? <Text style={{ color: 'red', marginTop: 15 }}>{error}</Text> : null}
+        {error ? <Text style={styles.error}>{error}</Text> : null}
       </View>
     </View>
   );
@@ -144,6 +143,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     fontSize: 14,
     textDecorationLine: 'underline',
+  },
+  error: { 
+    color: 'red',
+    marginTop: 15
   }
 });
 
