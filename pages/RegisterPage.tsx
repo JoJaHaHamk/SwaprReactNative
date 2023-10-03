@@ -3,13 +3,14 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'reac
 import { Colors, Shadow } from '../constants/values';
 import AuthService from '../modules/services/AuthService';
  
-const RegisterPage = () => {
+const RegisterPage = (props: any) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [country, setCountry] = useState('');
+  const [error, setError] = useState('');
 
   const authService = new AuthService();
 
@@ -17,9 +18,9 @@ const RegisterPage = () => {
     const success = await authService.register(name, email, password, address, city, country);
 
     if (success) {
-      console.log('success');
+      props.navigation.navigate("Login");
     } else {
-      console.log('error');
+      setError('Something went wrong. Please try again.');
     }
   }
 
@@ -75,13 +76,14 @@ const RegisterPage = () => {
           onChangeText={(text) => setCountry(text)}
         />
         <View style={styles.options}>
-          <View>
+          <TouchableOpacity onPress={()=>props.navigation.navigate("Login")}>
             <Text style={styles.link}>Have an account?</Text>
-          </View>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={handleRegister}>
             <Text style={styles.buttonText}>REGISTER</Text>
           </TouchableOpacity>
         </View>
+        {error ? <Text style={{ color: 'red', marginTop: 15 }}>{error}</Text> : null}
       </View>
     </View>
   );
