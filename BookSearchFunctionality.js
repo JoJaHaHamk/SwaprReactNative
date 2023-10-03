@@ -21,20 +21,22 @@ export default class BookService {
 		return this;
 	}
 
-	async searchBooks(query, limit = 6) {
-		let fullUrl = `${url}/search`;
-		fullUrl += `?query=${encodeURIComponent(query)}`;
-		fullUrl += `&limit=${limit}`;
+	async searchBooks(title) {
+    try {
+        const fullUrl = `https://www.googleapis.com/books/v1/volumes?q={$title}`;
+        const response = await fetch(fullUrl, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: token,
+            },
+        });
 
-		const response = await fetch(fullUrl, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: token,
-			},
-		});
+        return await response.json();
+    } catch (error) {
+        console.error('Error searching for books:', error);
+    }
+}
 
-		return await response.json();
-	}
 
 	async addBook(bookData) {
 		try {
@@ -49,9 +51,14 @@ export default class BookService {
 
 			return await response.json();
 		} catch (error) {
-			// Handle the error here
+			
 		}
 	}
 }
+
+
+
+
+
 
 
