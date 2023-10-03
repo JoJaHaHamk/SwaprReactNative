@@ -21,9 +21,9 @@ export default class BookService {
 		return this;
 	}
 
-	async searchBooks(isbn) {
+	async searchBooks(title) {
     try {
-        const fullUrl = `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`;
+        const fullUrl =`https://www.googleapis.com/books/v1/volumes?q=${title}`;
         const response = await fetch(fullUrl, {
             headers: {
                 'Content-Type': 'application/json',
@@ -55,6 +55,7 @@ export default class BookService {
 		}
 	}
 }
+
 
 
 
