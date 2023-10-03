@@ -1,4 +1,4 @@
-
+// BookService.js
 import {_api} from '@/config';
 
 const url = _api + '/books';
@@ -6,11 +6,11 @@ const url = _api + '/books';
 const token = localStorage.getItem('token');
 
 export default class BookService {
-    
+    // ... (existing methods)
 
-    async addToOwnedList(bookId) {
+    async addToOwnedList(userId) {
         try {
-            const response = await fetch(`${url}/${bookId}/addToOwned`, {
+            const response = await fetch(`${url}/user/${userId}/book`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -24,9 +24,9 @@ export default class BookService {
         }
     }
 
-    async addToWantedList(bookId) {
+    async addToWantedList(userId) {
         try {
-            const response = await fetch(`${url}/${bookId}/addToWanted`, {
+            const response = await fetch(`${url}/user/${userId}/book`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export default class BookService {
 
             return await response.json();
         } catch (error) {
-            
+            // Handle the error here
         }
     }
 }
