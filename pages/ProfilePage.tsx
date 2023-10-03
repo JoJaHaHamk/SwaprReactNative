@@ -15,7 +15,9 @@ const ProfilePage = (props: any) => {
             <Text style={styles.address}>Visamäentie 21, Hämeenlinna, Finland</Text>
           </View>
           <View style={styles.profileOptions}>
-            <Image source={require('../assets/img/logout.png')} />
+            <TouchableOpacity onPress={()=>props.navigation.navigate("Login")}>
+              <Image source={require('../assets/img/logout.png')} />
+            </TouchableOpacity>
             <Image style={styles.edit} source={require('../assets/img/edit.png')} />
           </View>
         </View>

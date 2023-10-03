@@ -5,6 +5,7 @@ import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
 
 const BooksPage = (props: any) => {
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>

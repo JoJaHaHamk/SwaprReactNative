@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Colors, Shadow } from '../constants/values';
 
-const LoginPage = () => {
+const LoginPage = (props: any) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -25,7 +25,7 @@ const LoginPage = () => {
           />
         <View style={styles.options}>
           <TouchableOpacity>
-            <Text style={styles.link}>Don't have an accout?</Text>
+            <Text style={styles.link} onPress={()=>props.navigation.navigate("Register")}>Don't have an accout?</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>LOGIN</Text>
