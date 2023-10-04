@@ -1,21 +1,20 @@
-
 import {_api} from '@/config';
 
-const url = _api + '/books';
+const url = _api + '/user'; // Updated endpoint
 
 const token = localStorage.getItem('token');
 
 export default class BookService {
-    // ... (existing methods)
 
-    async addToOwnedList(bookId) {
+    async addToOwnedList(bookData) {
         try {
-            const response = await fetch(`${url}/${bookId}/addToOwned`, {
+            const response = await fetch(`${url}/{userId}/book`, { // Updated endpoint
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: token,
+                    Authorization: `Bearer ${token}`, // Updated authorization header
                 },
+                body: JSON.stringify(bookData), // Pass book data as the request body
             });
 
             return await response.json();
@@ -24,14 +23,15 @@ export default class BookService {
         }
     }
 
-    async addToWantedList(bookId) {
+    async addToWantedList(bookData) {
         try {
-            const response = await fetch(`${url}/${bookId}/addToWanted`, {
+            const response = await fetch(`${url}/{userId}/book`, { // Updated endpoint
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: token,
+                    Authorization: `Bearer ${token}`, // Updated authorization header
                 },
+                body: JSON.stringify(bookData), // Pass book data as the request body
             });
 
             return await response.json();
@@ -40,3 +40,4 @@ export default class BookService {
         }
     }
 }
+
