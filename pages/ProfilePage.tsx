@@ -32,24 +32,24 @@ const ProfilePage = (props: any) => {
       <View style={styles.content}>
         <Text style={styles.header}>Profile</Text>
         <View style={styles.profileBox}>
+          <View style={styles.profileInfo}>
+            <Image source={require('../assets/img/profile_picture.png')} />
             {userData ? (
-              <View style={styles.profileInfo}>
-                <Image source={require('../assets/img/profile_picture.png')} />
-                <Text style={styles.name}>{userData.username}</Text>
+              <View>
+                <Text style={styles.name}>@{userData.username}</Text>
                 <Text style={styles.address}>{userData.adress}, {userData.city}, {userData.country}</Text>
               </View>
             ) : (
-              <View style={styles.profileInfo}>
-                <Image source={require('../assets/img/profile_picture.png')} />
-                <Text style={styles.nameLoading}></Text>
-                <Text style={styles.addressLoading}></Text>
-              </View>
+              <View style={{height: 54}}></View>
             )}
+          </View>
           <View style={styles.profileOptions}>
             <TouchableOpacity onPress={() => props.navigation.navigate("Login")}>
               <Image source={require('../assets/img/logout.png')} />
             </TouchableOpacity>
-            <Image style={styles.edit} source={require('../assets/img/edit.png')} />
+            <TouchableOpacity onPress={() => props.navigation.navigate("EditProfile")}>
+              <Image style={styles.edit} source={require('../assets/img/edit.png')} />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.section}>
@@ -140,19 +140,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     flex: 1,
   },
-  nameLoading: {
-    fontSize: 24,
-    width: 50,
-    backgroundColor: Colors.lightGray,
-    borderRadius: 5,
-    marginBottom: 5,
-  },
-  addressLoading: {
-    fontSize: 12,
-    width: 100,
-    backgroundColor: Colors.lightGray,
-    borderRadius: 5,
-  }
 });
 
 export default ProfilePage;
