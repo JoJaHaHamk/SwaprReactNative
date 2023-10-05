@@ -1,24 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, TextInput, Image } from 'react-native';
 import BookList from '../components/BookList';
 import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
+import BookService from '../modules/services/BooksService';
 
 const BooksPage = (props: any) => {
+  const bookService = new BookService();
+  const [booksData, setBooksData] = useState([]);
+  const [searchText, setSearchText] = useState('');
+
+  useEffect(() => {
+    const fetchBooksData = async () => {
+      const books = await bookService.getBooks('owned', searchText);
+      if (books) {
+        setBooksData(books);
+      }
+    }
+
+    fetchBooksData();
+  }, [searchText]);
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.header}>Books</Text>
         <View style={styles.search}>
-          <TextInput style={styles.input} placeholder="Search for a book" placeholderTextColor="#B8B8B8"  />
+          <TextInput 
+            style={styles.input} 
+            placeholder="Search for a book" 
+            placeholderTextColor="#B8B8B8" 
+            value={searchText} 
+            onChangeText={(text) => setSearchText(text)}  
+          />
           <Image style={styles.searchIcon} source={require('../assets/img/search.png')} />
         </View>
         <View style={styles.filterOptions}>
             <Text style={[styles.filterOption, styles.selectedOption, {borderTopLeftRadius: 5, borderBottomLeftRadius: 5}]}>OWNED BOOKS</Text>
             <Text style={[styles.filterOption, {borderTopRightRadius: 5, borderBottomRightRadius: 5}]}>WANTED BOOKS</Text>
         </View>
-        <BookList />
+        <BookList books={booksData} />
       </View>
       <Navigation params={props} />
     </View>
