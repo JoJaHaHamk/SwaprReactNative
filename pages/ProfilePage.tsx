@@ -6,7 +6,7 @@ import UserService from '../modules/services/UserService';
 
 interface User {
   username: string;
-  adress: string;
+  address: string;
   city: string;
   country: string;
 }
@@ -16,7 +16,7 @@ const ProfilePage = (props: any) => {
   const [userData, setUserData] = useState<User>();
 
   useEffect(() => {
-    async function fetchUserData() {
+    const fetchUserData = async () => {
       const user = await userService.getUser();
       if (user) {
         setUserData(user);
@@ -36,8 +36,8 @@ const ProfilePage = (props: any) => {
             <Image source={require('../assets/img/profile_picture.png')} />
             {userData ? (
               <View>
-                <Text style={styles.name}>@{userData.username}</Text>
-                <Text style={styles.address}>{userData.adress}, {userData.city}, {userData.country}</Text>
+                <Text style={styles.name}>{userData.username}</Text>
+                <Text style={styles.address}>{userData.address}, {userData.city}, {userData.country}</Text>
               </View>
             ) : (
               <View style={{height: 54}}></View>

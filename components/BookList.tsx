@@ -1,29 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, FlatList, Image } from 'react-native';
 import { Colors } from '../constants/values';
+import GoogleBooksService from '../modules/services/GoogleBooksService';
 
-const BookList = () => {
-  const books = [
-    { id: 1, smallThumbnail: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api" },
-    { id: 2, smallThumbnail: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api" },
-    { id: 3, smallThumbnail: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api" },
-    { id: 4, smallThumbnail: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api" },
-    { id: 5, smallThumbnail: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api" },
-    { id: 6, smallThumbnail: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api" },
-    { id: 7, smallThumbnail: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api" },
-    { id: 8, smallThumbnail: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api" },
-    { id: 9, smallThumbnail: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api" },
-    { id: 10, smallThumbnail: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api" },
-    { id: 11, smallThumbnail: "http://books.google.com/books/content?id=1J2oDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api" },
-    { id: 12, smallThumbnail: "http://books.google.com/books/content?id=1J2oDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api" },
-]
+const BookList = (props: any) => {
+  const googleBooksService = new GoogleBooksService();
+  const { books } = props;
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
 
-  const renderItem = (item: any) => {
+  useEffect(() => {
+    const fetchImageUrls = async () => {
+      const urls = await Promise.all(books.map((book: any) => googleBooksService.getBookImageByIsbn(book.isbn)));
+      setImageUrls(urls);
+    };
+
+    fetchImageUrls();
+  }, [books]);
+
+  const renderItem = ({item, index}: any) => {
+    const imageUrl = imageUrls[index];
+    console.log("imageUrl:", imageUrl);
+
     return (
       <View style={styles.imageContainer}>
-        <Image 
-          source={{uri: item.smallThumbnail}}
-          style={styles.image} resizeMode='stretch' />
+          <Image 
+            source={{ uri: imageUrl }}
+            style={styles.image}
+            resizeMode='stretch'
+          />
       </View>
     );
   }
@@ -34,7 +38,7 @@ const BookList = () => {
         data={books}
         keyExtractor={(item) => item.id.toString()}
         numColumns={3}
-        renderItem={({item}) => renderItem(item)}
+        renderItem={renderItem}
       />
     </View>
   );
