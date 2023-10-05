@@ -12,7 +12,7 @@ export default class BooksService {
     }
     const headers = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': token || '',
+      'Authorization': token ?? '',
     });
     const response = await fetch(fullUrl, {
       method: 'GET',
