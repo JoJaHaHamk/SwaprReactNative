@@ -10,6 +10,7 @@ const BookList = (props: any) => {
 
   useEffect(() => {
     const fetchImageUrls = async () => {
+      setImageUrls([]);
       const urls = await Promise.all(books.map((book: any) => googleBooksService.getBookImageByIsbn(book.isbn)));
       setImageUrls(urls);
     };
@@ -22,23 +23,25 @@ const BookList = (props: any) => {
 
     return (
       <View style={styles.imageContainer}>
-          <Image 
-            source={{ uri: imageUrl }}
-            style={styles.image}
-            resizeMode='stretch'
-          />
+        <Image 
+          source={{ uri: imageUrl }}
+          style={styles.image}
+          resizeMode='stretch'
+        />
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <FlatList style={styles.list}
-        data={books}
-        keyExtractor={(item) => item.id.toString()}
-        numColumns={3}
-        renderItem={renderItem}
-      />
+      { imageUrls.length > 0 && (
+        <FlatList style={styles.list}
+          data={books}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={3}
+          renderItem={renderItem}
+        />
+      )}
     </View>
   );
 };
