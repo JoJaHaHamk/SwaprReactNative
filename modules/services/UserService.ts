@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { _api } from '../../config';
 
-export default class AuthService {
+export default class UserService {
   async getUser() {
     const token = await AsyncStorage.getItem('token');
     const userId = await AsyncStorage.getItem('userId');

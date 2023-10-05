@@ -1,6 +1,6 @@
 const _api = 'https://www.googleapis.com/books/v1/volumes';
 
-export default class BooksService {
+export default class GoogleBooksService {
   async getBookImageByIsbn(type: string) {
 
     const fullUrl = _api + '?q=isbn:' + type;
