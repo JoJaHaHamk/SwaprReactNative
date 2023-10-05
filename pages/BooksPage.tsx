@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, TextInput, Image } from 'react-native';
+import { View, StyleSheet, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 import BookList from '../components/BookList';
 import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
@@ -9,17 +9,19 @@ const BooksPage = (props: any) => {
   const bookService = new BookService();
   const [booksData, setBooksData] = useState([]);
   const [searchText, setSearchText] = useState('');
+  const [filter, setFilter] = useState('owned');
 
   useEffect(() => {
     const fetchBooksData = async () => {
-      const books = await bookService.getBooks('owned', searchText);
+      setBooksData([]);
+      const books = await bookService.getBooks(filter, searchText);
       if (books) {
         setBooksData(books);
       }
     }
 
     fetchBooksData();
-  }, [searchText]);
+  }, [searchText, filter]);
 
   return (
     <View style={styles.container}>
@@ -36,8 +38,12 @@ const BooksPage = (props: any) => {
           <Image style={styles.searchIcon} source={require('../assets/img/search.png')} />
         </View>
         <View style={styles.filterOptions}>
-            <Text style={[styles.filterOption, styles.selectedOption, {borderTopLeftRadius: 5, borderBottomLeftRadius: 5}]}>OWNED BOOKS</Text>
-            <Text style={[styles.filterOption, {borderTopRightRadius: 5, borderBottomRightRadius: 5}]}>WANTED BOOKS</Text>
+            <TouchableOpacity style={styles.filterOptionButton} onPress={()=>{setFilter('owned')}}>
+              <Text style={[filter == 'owned' ? styles.selectedOption : styles.filterOption, {borderTopLeftRadius: 5, borderBottomLeftRadius: 5}]}>OWNED BOOKS</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.filterOptionButton} onPress={()=>{setFilter('requested')}}>
+              <Text style={[filter == 'requested' ? styles.selectedOption : styles.filterOption, {borderTopRightRadius: 5, borderBottomRightRadius: 5}]}>WANTED BOOKS</Text>
+            </TouchableOpacity>
         </View>
         <BookList books={booksData} />
       </View>
@@ -61,10 +67,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
     letterSpacing: 2,
     paddingBottom: 50
-  },
-  options: {
-    borderBottomColor: Colors.lightGray,
-    borderBottomWidth: 1,
   },
   search: {
     marginTop: -30,
@@ -95,15 +97,21 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 15,
   },
+  filterOptionButton: {
+    width: '50%',
+  },
   filterOption: {
     padding: 10,
     fontSize: 14,
     fontFamily: 'Roboto-Medium',
+    textAlign: 'center',
     color: Colors.primary,
-    width: '50%',
-    textAlign: 'center'
   },
   selectedOption: {
+    padding: 10,
+    fontSize: 14,
+    fontFamily: 'Roboto-Medium',
+    textAlign: 'center',
     backgroundColor: Colors.primary,
     color: Colors.onPrimary,
   }
