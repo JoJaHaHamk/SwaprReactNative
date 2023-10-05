@@ -1,21 +1,52 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
+import UserService from '../modules/services/UserService';
+
+interface User {
+  username: string;
+  adress: string;
+  city: string;
+  country: string;
+}
 
 const ProfilePage = (props: any) => {
+  const userService = new UserService();
+  const [userData, setUserData] = useState<User>();
+
+  useEffect(() => {
+    async function fetchUserData() {
+      const user = await userService.getUser();
+      if (user) {
+        setUserData(user);
+        console.log(user);
+      }
+    }
+
+    fetchUserData();
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.header}>Profile</Text>
         <View style={styles.profileBox}>
-          <View style={styles.profileInfo}>
-            <Image source={require('../assets/img/profile_picture.png')} />
-            <Text style={styles.name}>Hans Zimmer</Text>
-            <Text style={styles.address}>Visamäentie 21, Hämeenlinna, Finland</Text>
-          </View>
+            {userData ? (
+              <View style={styles.profileInfo}>
+                <Image source={require('../assets/img/profile_picture.png')} />
+                <Text style={styles.name}>{userData.username}</Text>
+                <Text style={styles.address}>{userData.adress}, {userData.city}, {userData.country}</Text>
+              </View>
+            ) : (
+              <View style={styles.profileInfo}>
+                <Image source={require('../assets/img/profile_picture.png')} />
+                <Text style={styles.nameLoading}></Text>
+                <Text style={styles.addressLoading}></Text>
+              </View>
+            )}
           <View style={styles.profileOptions}>
-            <TouchableOpacity onPress={()=>props.navigation.navigate("Login")}>
+            <TouchableOpacity onPress={() => props.navigation.navigate("Login")}>
               <Image source={require('../assets/img/logout.png')} />
             </TouchableOpacity>
             <Image style={styles.edit} source={require('../assets/img/edit.png')} />
@@ -74,6 +105,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: 'Roboto-Bold',
     color: 'black',
+    marginBottom: 5,
   },
   address: {
     fontSize: 12,
@@ -107,6 +139,19 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     fontSize: 16,
     flex: 1,
+  },
+  nameLoading: {
+    fontSize: 24,
+    width: 50,
+    backgroundColor: Colors.lightGray,
+    borderRadius: 5,
+    marginBottom: 5,
+  },
+  addressLoading: {
+    fontSize: 12,
+    width: 100,
+    backgroundColor: Colors.lightGray,
+    borderRadius: 5,
   }
 });
 

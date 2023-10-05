@@ -8,7 +8,7 @@ export default class AuthService {
 
     const fullUrl = _api + '/user/' + userId;
     const response = await fetch(fullUrl, {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': token ?? '',
@@ -16,8 +16,10 @@ export default class AuthService {
     });
 
     if (response.status === 200) {
-      return await response.json();
+      const data = await response.json();
+      return data;
     } else {
+      console.log(response.status);
       return false;
     }
   }
