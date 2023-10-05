@@ -8,24 +8,31 @@ import BookService from '../modules/services/BooksService';
 const BooksPage = (props: any) => {
   const bookService = new BookService();
   const [booksData, setBooksData] = useState([]);
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     const fetchBooksData = async () => {
-      const books = await bookService.getBooks('owned');
+      const books = await bookService.getBooks('owned', searchText);
       if (books) {
         setBooksData(books);
       }
     }
 
     fetchBooksData();
-  }, []);
+  }, [searchText]);
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.header}>Books</Text>
         <View style={styles.search}>
-          <TextInput style={styles.input} placeholder="Search for a book" placeholderTextColor="#B8B8B8"  />
+          <TextInput 
+            style={styles.input} 
+            placeholder="Search for a book" 
+            placeholderTextColor="#B8B8B8" 
+            value={searchText} 
+            onChangeText={(text) => setSearchText(text)}  
+          />
           <Image style={styles.searchIcon} source={require('../assets/img/search.png')} />
         </View>
         <View style={styles.filterOptions}>

@@ -19,7 +19,6 @@ const BookList = (props: any) => {
 
   const renderItem = ({item, index}: any) => {
     const imageUrl = imageUrls[index];
-    console.log("imageUrl:", imageUrl);
 
     return (
       <View style={styles.imageContainer}>

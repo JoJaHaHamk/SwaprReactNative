@@ -20,7 +20,6 @@ const ProfilePage = (props: any) => {
       const user = await userService.getUser();
       if (user) {
         setUserData(user);
-        console.log(user);
       }
     }
 
