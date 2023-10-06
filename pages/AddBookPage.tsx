@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Colors, Shadow } from '../constants/values'; 
-import BookList from '../components/BookList';
+import GoogleBookList from '../components/GoogleBookList';
 import DropDown from '../components/DropDown';
+import GoogleBooksService from '../modules/services/GoogleBooksService';
 
 const AddBookPage = (props: any) => {
+  const googleBooksService = new GoogleBooksService();
+  const [books, setBooks] = useState([]);
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (search != '') {
+        const result = await googleBooksService.searchBooks(search);
+        setBooks(result);
+      } else {
+        setBooks([]);
+      }
+    };
+
+    fetchData();
+  }, [search]);
+
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
@@ -15,10 +33,16 @@ const AddBookPage = (props: any) => {
       </View>
       <View style={styles.form}>
         <View style={styles.search}>
-          <TextInput style={styles.input} placeholder="Search for a book" placeholderTextColor="#B8B8B8"  />
+          <TextInput 
+            style={styles.input}
+            placeholder="Search for a book"
+            placeholderTextColor="#B8B8B8"
+            onChangeText={text => setSearch(text)}
+            value={search}
+          />
           <Image style={styles.searchIcon} source={require('../assets/img/search.png')} />
         </View>
-        <BookList />
+        <GoogleBookList books={books} />
         <View style={styles.addOptions}>
           <View style={styles.dropdownContainer}>
             <DropDown />
