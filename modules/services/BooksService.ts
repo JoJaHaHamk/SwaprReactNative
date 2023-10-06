@@ -26,4 +26,27 @@ export default class BooksService {
       return false;
     }
   }
+
+  async addBook(isbn: string, title: string, author: string, type: string) {
+    const token = await AsyncStorage.getItem('token');
+    const userId = await AsyncStorage.getItem('userId');
+
+    let fullUrl = _api + '/user/' + userId + '/book';
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': token ?? '',
+    });
+    const response = await fetch(fullUrl, {
+      method: 'GET',
+      headers,
+      body: JSON.stringify({ isbn, title, author, type })
+    });
+
+    if (response.status === 200) {
+      const data = await response.json();
+      return data;
+    } else {
+      return false;
+    }
+  }
 }
