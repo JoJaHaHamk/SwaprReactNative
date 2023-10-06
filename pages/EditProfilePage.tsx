@@ -2,12 +2,14 @@ import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { Colors, Shadow } from '../constants/values';
 
-const EditProfilePage = () => {
+const EditProfilePage = (props: any) => {
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
         <Text style={styles.header}>Edit profile</Text>
-        <Image style={styles.image} source={require('../assets/img/back.png')} />
+        <TouchableOpacity onPress={() => props.navigation.navigate("Profile")}>
+          <Image style={styles.image} source={require('../assets/img/back.png')} />
+        </TouchableOpacity>
       </View>
       <View style={styles.form}>
         <Text style={[styles.subHeading, {marginTop: 30}]}>USERNAME</Text>
