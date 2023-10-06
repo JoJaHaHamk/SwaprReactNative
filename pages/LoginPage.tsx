@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Colors, Shadow } from '../constants/values';
+import AuthService from '../modules/services/AuthService';
 
-const LoginPage = () => {
+const LoginPage = (props: any) => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
+
+  const authService = new AuthService();
+
+  const handleLogin = async () => {
+    const success = await authService.login(email, password);
+    if (success) {
+      props.navigation.navigate("Books");
+    } else {
+      setError('Something went wrong. Please try again.');
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -15,6 +31,8 @@ const LoginPage = () => {
             style={styles.input}
             placeholder="Email"
             placeholderTextColor="#B8B8B8"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
           />
         <Text style={styles.label}>PASSWORD</Text>
           <TextInput
@@ -22,15 +40,18 @@ const LoginPage = () => {
             placeholder="Password"
             placeholderTextColor="#B8B8B8"
             secureTextEntry
+            value={password}
+            onChangeText={(text) => setPassword(text)}
           />
         <View style={styles.options}>
           <TouchableOpacity>
-            <Text style={styles.link}>Don't have an accout?</Text>
+            <Text style={styles.link} onPress={()=>props.navigation.navigate("Register")}>Don't have an accout?</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={handleLogin}>
               <Text style={styles.buttonText}>LOGIN</Text>
           </TouchableOpacity>
         </View>
+        {error ? <Text style={styles.error}>{error}</Text> : null}
       </View>
     </View>
   );
@@ -98,6 +119,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     fontSize: 14,
     textDecorationLine: 'underline',
+  },
+  error: { 
+    color: 'red',
+    marginTop: 15
   }
 });
 

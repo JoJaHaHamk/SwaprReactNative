@@ -1,9 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
+import UserService from '../modules/services/UserService';
+
+interface User {
+  username: string;
+  address: string;
+  city: string;
+  country: string;
+}
 
 const ProfilePage = (props: any) => {
+  const userService = new UserService();
+  const [userData, setUserData] = useState<User>();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const user = await userService.getUser();
+      if (user) {
+        setUserData(user);
+      }
+    }
+
+    fetchUserData();
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -11,12 +33,22 @@ const ProfilePage = (props: any) => {
         <View style={styles.profileBox}>
           <View style={styles.profileInfo}>
             <Image source={require('../assets/img/profile_picture.png')} />
-            <Text style={styles.name}>Hans Zimmer</Text>
-            <Text style={styles.address}>Visamäentie 21, Hämeenlinna, Finland</Text>
+            {userData ? (
+              <View>
+                <Text style={styles.name}>{userData.username}</Text>
+                <Text style={styles.address}>{userData.address}, {userData.city}, {userData.country}</Text>
+              </View>
+            ) : (
+              <View style={{height: 54}}></View>
+            )}
           </View>
           <View style={styles.profileOptions}>
-            <Image source={require('../assets/img/logout.png')} />
-            <Image style={styles.edit} source={require('../assets/img/edit.png')} />
+            <TouchableOpacity onPress={() => props.navigation.navigate("Login")}>
+              <Image source={require('../assets/img/logout.png')} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => props.navigation.navigate("EditProfile")}>
+              <Image style={styles.edit} source={require('../assets/img/edit.png')} />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.section}>
@@ -72,6 +104,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: 'Roboto-Bold',
     color: 'black',
+    marginBottom: 5,
   },
   address: {
     fontSize: 12,
@@ -105,7 +138,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     fontSize: 16,
     flex: 1,
-  }
+  },
 });
 
 export default ProfilePage;

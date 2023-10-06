@@ -6,8 +6,8 @@ export const Colors = {
     onSecondary: '#FFFFFF',
     onBackground: '#000000',
     lightGray: '#D7D7D7',
-    gray: 'B8B8B8',
-    darkGray: '676767'
+    gray: '#B8B8B8',
+    darkGray: '#676767'
 };
 
 import { Platform } from 'react-native';
