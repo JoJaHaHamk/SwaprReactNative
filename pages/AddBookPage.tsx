@@ -9,7 +9,7 @@ const AddBookPage = (props: any) => {
     <View style={styles.container}>
       <View style={styles.topBar}>
         <Text style={styles.header}>Add Book</Text>
-        <TouchableOpacity onPress={()=>props.navigation.navigate("Books")} activeOpacity={1}>
+        <TouchableOpacity onPress={()=>props.navigation.goBack()} activeOpacity={1}>
           <Image style={styles.image} source={require('../assets/img/back.png')} />
         </TouchableOpacity>
       </View>

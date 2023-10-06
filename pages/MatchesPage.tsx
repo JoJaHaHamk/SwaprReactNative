@@ -15,22 +15,36 @@ interface Matches {
 const MatchesPage = (props: any) => {
   const swapsService = new SwapsService();
   const googleBooksService = new GoogleBooksService();
+  const [matchesData, setMatchesData] = useState<Matches[]>([]);
   const [wantedUrl, setWantedUrl] = useState('');
   const [ownedUrl, setOwnedUrl] = useState('');
   const [dinstance, setDistance] = useState(0);
+  const [index, setIndex] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchMatches = async () => {
-      const matches = await swapsService.getSwaps('match');
-      setWantedUrl(await googleBooksService.getBookImageByIsbn(matches[0].wantedBookIsbn));
-      setOwnedUrl(await googleBooksService.getBookImageByIsbn(matches[0].ownedBookIsbn));
-      setDistance(matches[0].distance / 1000);
-      setLoading(false);
+      setMatchesData(await swapsService.getSwaps('match'));
     }
 
     fetchMatches();
   }, []);
+
+  useEffect(() => {
+    const setCard = async () => {
+      setWantedUrl(await googleBooksService.getBookImageByIsbn(matchesData[index].wantedBookIsbn));
+      setOwnedUrl(await googleBooksService.getBookImageByIsbn(matchesData[index].ownedBookIsbn));
+      setDistance(matchesData[index].distance / 1000);
+      setLoading(false);
+    }
+
+    if (matchesData.length >= index + 1) {
+      setLoading(true);
+      setCard();
+    }
+  }, [matchesData, index]);
+
+
 
 
   return (
