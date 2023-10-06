@@ -20,7 +20,7 @@ export default class BookService {
 		this.perPage = perPage;
 		return this;
 	}
-
+	
 	async searchBooks(title) {
     try {
         const fullUrl = `https://www.googleapis.com/books/v1/volumes?q={$title}`;
