@@ -19,7 +19,6 @@ export default class UserService {
       const data = await response.json();
       return data;
     } else {
-      console.log(response.status);
       return false;
     }
   }

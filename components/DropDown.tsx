@@ -2,28 +2,25 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 import { Colors, Shadow } from '../constants/values';
 
-const DropDown = () => {
-  const options = ['I own this book', 'I want this book'];
-
-  const [selected, setSelected] = useState(options[0]);
+const DropDown = (props: any) => {
   const [show, setShow] = useState(false);
 
   return (
     <View>
       {show && (
         <View style={styles.options}>
-          {options.map((option, index) => (
+          {props.options.map((option: string, index: number) => (
             <TouchableOpacity key={index} onPress={() => {
-              setSelected(option);
+              props.onOptionChange(option);
               setShow(false);
             }}>
-              <Text style={(index === options.length - 1) ? styles.option : styles.optionWithBorder}>{option}</Text>
+              <Text style={(index === props.options.length - 1) ? styles.option : styles.optionWithBorder}>{option}</Text>
             </TouchableOpacity>
           ))}
         </View>
       )}
       <TouchableOpacity style={styles.dropdown} activeOpacity={1} onPress={()=>setShow(!show)}>
-        <Text style={styles.dropdownText}>{selected}</Text>
+        <Text style={styles.dropdownText}>{props.option}</Text>
         <Image style={styles.dropdownIcon} source={require('../assets/img/dropdown.png')} />
       </TouchableOpacity>
     </View>
