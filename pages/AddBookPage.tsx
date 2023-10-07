@@ -9,6 +9,9 @@ const AddBookPage = (props: any) => {
   const googleBooksService = new GoogleBooksService();
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState('');
+  const [selected, setSelected] = useState<number>();
+  const options = ['I own this book', "I want this book"];
+  const [option, setOption] = useState<string>(options[0]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,6 +25,10 @@ const AddBookPage = (props: any) => {
 
     fetchData();
   }, [search]);
+
+  const addBook = () => {
+    
+  }
 
   return (
     <View style={styles.container}>
@@ -42,12 +49,14 @@ const AddBookPage = (props: any) => {
           />
           <Image style={styles.searchIcon} source={require('../assets/img/search.png')} />
         </View>
-        <GoogleBookList books={books} />
+        <GoogleBookList books={books} onSelected={setSelected} selected={selected} />
         <View style={styles.addOptions}>
           <View style={styles.dropdownContainer}>
-            <DropDown />
+            <DropDown options={options} option={option} onOptionChange={setOption} />
           </View>
-          <Text style={styles.button}>ADD BOOK</Text>
+          <TouchableOpacity onPress={addBook}>
+            <Text style={styles.button}>ADD BOOK</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

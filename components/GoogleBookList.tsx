@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, FlatList, Image } from 'react-native';
+import { View, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import { Colors } from '../constants/values';
 
 const GoogleBookList = (props: any) => {
   const { books } = props;
-
   const [booksData, setBooksData] = useState<any[]>([]);
 
   useEffect(() => {
@@ -19,13 +18,16 @@ const GoogleBookList = (props: any) => {
     console.log(item.volumeInfo.imageLinks?.thumbnail);
 
     return (
-      <View style={styles.imageContainer}>
+      <TouchableOpacity 
+        activeOpacity={1}
+        style={[styles.imageContainer, props.selected == index ? {opacity: 0.5} : {opacity: 1}]} 
+        onPress={()=>props.onSelected(index)}>
         <Image 
           source={{ uri: item.volumeInfo.imageLinks?.thumbnail }}
           style={styles.image}
           resizeMode='stretch'
         />
-      </View>
+      </TouchableOpacity>
     );
   }
 
@@ -58,7 +60,8 @@ const styles = StyleSheet.create({
   },
   image: {
     borderRadius: 5,
-    aspectRatio: 6 / 9
+    aspectRatio: 6 / 9,
+    backgroundColor: Colors.lightGray,
   }
 });
 
