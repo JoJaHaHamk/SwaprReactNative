@@ -1,22 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import { Colors } from '../constants/values';
 
 const GoogleBookList = (props: any) => {
-  const { books } = props;
-  const [booksData, setBooksData] = useState<any[]>([]);
-
-  useEffect(() => {
-    if (books) {
-      const filteredBooks = books.filter((book: any) => book.volumeInfo.imageLinks?.thumbnail);
-      setBooksData(filteredBooks);
-    }
-  }, [books]);
 
   const renderItem = ({item, index}: any) => {
-    console.log(index);
-    console.log(item.volumeInfo.imageLinks?.thumbnail);
-
     return (
       <TouchableOpacity 
         activeOpacity={1}
@@ -34,7 +22,7 @@ const GoogleBookList = (props: any) => {
   return (
     <View style={styles.container}>
       <FlatList style={styles.list}
-        data={booksData}
+        data={props.books}
         keyExtractor={(item) => item.id.toString()}
         numColumns={3}
         renderItem={renderItem}

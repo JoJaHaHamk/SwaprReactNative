@@ -4,9 +4,11 @@ import { Colors, Shadow } from '../constants/values';
 import GoogleBookList from '../components/GoogleBookList';
 import DropDown from '../components/DropDown';
 import GoogleBooksService from '../modules/services/GoogleBooksService';
+import BooksService from '../modules/services/BooksService';
 
 const AddBookPage = (props: any) => {
   const googleBooksService = new GoogleBooksService();
+  const booksService = new BooksService();
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<number>();
@@ -17,7 +19,8 @@ const AddBookPage = (props: any) => {
     const fetchData = async () => {
       if (search != '') {
         const result = await googleBooksService.searchBooks(search);
-        setBooks(result);
+        const filteredBooks = result.filter((book: any) => book.volumeInfo.imageLinks?.thumbnail);
+        setBooks(filteredBooks);
       } else {
         setBooks([]);
       }
@@ -26,8 +29,16 @@ const AddBookPage = (props: any) => {
     fetchData();
   }, [search]);
 
-  const addBook = () => {
-    
+  const addBook = async () => {
+    if (selected != undefined) {
+      const book: any = books[selected];
+      const isbn = book.volumeInfo.industryIdentifiers.find((identifier: any) => identifier.type === "ISBN_13")?.identifier;
+      const title = book.volumeInfo.title;
+      const author = book.volumeInfo.authors[0];
+      const type = option === options[0] ? "owned" : "requested";
+      await booksService.addBook(isbn, title, author, type);
+      props.navigation.navigate("Books");
+    }
   }
 
   return (

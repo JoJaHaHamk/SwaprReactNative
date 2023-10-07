@@ -1,8 +1,8 @@
 const _api = 'https://www.googleapis.com/books/v1/volumes';
 
 export default class GoogleBooksService {
-  async getBookImageByIsbn(type: string) {
-    const fullUrl = _api + '?q=isbn:' + type;
+  async getBookImageByIsbn(isbn: string) {
+    const fullUrl = _api + '?q=isbn:' + isbn;
     const headers = new Headers({
       'Content-Type': 'application/json',
     });
@@ -13,6 +13,7 @@ export default class GoogleBooksService {
 
     if (response.status === 200) {
       const data = await response.json();
+      console.log(data.items[0].volumeInfo.imageLinks.thumbnail);
       return data.items[0].volumeInfo.imageLinks.thumbnail;
     } else {
       return false;
