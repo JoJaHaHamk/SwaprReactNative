@@ -13,7 +13,6 @@ export default class GoogleBooksService {
 
     if (response.status === 200) {
       const data = await response.json();
-      console.log(data.items[0].volumeInfo.imageLinks.thumbnail);
       return data.items[0].volumeInfo.imageLinks.thumbnail;
     } else {
       return false;
