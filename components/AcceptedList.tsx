@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, FlatList, Image, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, FlatList, Image, Text, TouchableOpacity, Linking } from 'react-native';
 import { Colors, Shadow } from '../constants/values';
 
 const AcceptedList = (props: any) => {
@@ -18,7 +18,7 @@ const AcceptedList = (props: any) => {
             </View>
           </View>
           <View style={styles.buttons}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={() => Linking.openURL(`mailto:${item.contactEmail}`)}>
               <Text style={styles.buttonText}>CONTACT</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button}>
@@ -29,9 +29,9 @@ const AcceptedList = (props: any) => {
         <Image
           source={{ uri: item.smallThumbnail2 }}
           style={styles.image} resizeMode='stretch' />
-      </View>
+      </View >
     );
-  }
+  };
 
   return (
     <View style={styles.container}>
