@@ -11,13 +11,7 @@ import SwapService from '../modules/services/SwapsService';
 const AcceptedPage = (props: any) => {
   const googleBookService = new GoogleBooksService();
   const swapService = new SwapService();
-  const [accepted, setAccepted] = useState([
-    { id: 1, smallThumbnail1: "https://designforwriters.com/wp-content/uploads/2017/10/design-for-writers-book-cover-tf-2-a-million-to-one.jpg", smallThumbnail2: "http://books.google.com/books/content?id=VvBKEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api", distance: 5.8 },
-    { id: 2, smallThumbnail1: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api", smallThumbnail2: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api", distance: 3.2 },
-    { id: 3, smallThumbnail1: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api", smallThumbnail2: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api", distance: 3.2 },
-    { id: 4, smallThumbnail1: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api", smallThumbnail2: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api", distance: 3.2 },
-    { id: 5, smallThumbnail1: "http://books.google.com/books/content?id=rg3LoAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api", smallThumbnail2: "http://books.google.com/books/content?id=N8iNEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api", distance: 3.2 },
-  ]);
+  const [accepted, setAccepted] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +23,7 @@ const AcceptedPage = (props: any) => {
             smallThumbnail1: await googleBookService.getBookImageByIsbn(item.ownedBookIsbn),
             smallThumbnail2: await googleBookService.getBookImageByIsbn(item.wantedBookIsbn),
             distance: (item.distance / 1000).toFixed(1),
+            contactEmail: item.contactEmail,
           };
           return swap;
         });
