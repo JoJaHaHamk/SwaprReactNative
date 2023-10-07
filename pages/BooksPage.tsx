@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, StyleSheet, Text, TextInput, Image, TouchableOpacity } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import BookList from '../components/BookList';
 import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
@@ -11,17 +12,19 @@ const BooksPage = (props: any) => {
   const [searchText, setSearchText] = useState('');
   const [filter, setFilter] = useState('owned');
 
-  useEffect(() => {
-    const fetchBooksData = async () => {
-      setBooksData([]);
-      const books = await bookService.getBooks(filter, searchText);
-      if (books) {
-        setBooksData(books);
-      }
+  const fetchBooksData = async () => {
+    setBooksData([]);
+    const books = await bookService.getBooks(filter, searchText);
+    if (books) {
+      setBooksData(books);
     }
+  }
 
-    fetchBooksData();
-  }, [searchText, filter]);
+  useFocusEffect(
+    useCallback(() => {
+      fetchBooksData();
+    }, [searchText, filter])
+  );
 
   return (
     <View style={styles.container}>

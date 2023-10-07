@@ -4,17 +4,23 @@ import { Colors, Shadow } from '../constants/values';
 import GoogleBookList from '../components/GoogleBookList';
 import DropDown from '../components/DropDown';
 import GoogleBooksService from '../modules/services/GoogleBooksService';
+import BooksService from '../modules/services/BooksService';
 
 const AddBookPage = (props: any) => {
   const googleBooksService = new GoogleBooksService();
+  const booksService = new BooksService();
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState('');
+  const [selected, setSelected] = useState<number>();
+  const options = ['I own this book', "I want this book"];
+  const [option, setOption] = useState<string>(options[0]);
 
   useEffect(() => {
     const fetchData = async () => {
       if (search != '') {
         const result = await googleBooksService.searchBooks(search);
-        setBooks(result);
+        const filteredBooks = result.filter((book: any) => book.volumeInfo.imageLinks?.thumbnail);
+        setBooks(filteredBooks);
       } else {
         setBooks([]);
       }
@@ -22,6 +28,18 @@ const AddBookPage = (props: any) => {
 
     fetchData();
   }, [search]);
+
+  const addBook = async () => {
+    if (selected != undefined) {
+      const book: any = books[selected];
+      const isbn = book.volumeInfo.industryIdentifiers.find((identifier: any) => identifier.type === "ISBN_13")?.identifier;
+      const title = book.volumeInfo.title;
+      const author = book.volumeInfo.authors[0];
+      const type = option === options[0] ? "owned" : "requested";
+      await booksService.addBook(isbn, title, author, type);
+      props.navigation.navigate("Books");
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -42,12 +60,14 @@ const AddBookPage = (props: any) => {
           />
           <Image style={styles.searchIcon} source={require('../assets/img/search.png')} />
         </View>
-        <GoogleBookList books={books} />
+        <GoogleBookList books={books} onSelected={setSelected} selected={selected} />
         <View style={styles.addOptions}>
           <View style={styles.dropdownContainer}>
-            <DropDown />
+            <DropDown options={options} option={option} onOptionChange={setOption} />
           </View>
-          <Text style={styles.button}>ADD BOOK</Text>
+          <TouchableOpacity onPress={addBook}>
+            <Text style={styles.button}>ADD BOOK</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

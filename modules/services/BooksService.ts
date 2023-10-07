@@ -37,7 +37,7 @@ export default class BooksService {
       'Authorization': token ?? '',
     });
     const response = await fetch(fullUrl, {
-      method: 'GET',
+      method: 'POST',
       headers,
       body: JSON.stringify({ isbn, title, author, type })
     });
