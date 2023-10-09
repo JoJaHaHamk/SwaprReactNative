@@ -47,10 +47,10 @@ const AcceptedPage = (props: any) => {
     <View style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.header}>Accepted</Text>
-        <View style={styles.search}>
+        {/* <View style={styles.search}>
           <TextInput style={styles.input} placeholder="Search for a book" placeholderTextColor="#B8B8B8" />
           <Image style={styles.searchIcon} source={require('../assets/img/search.png')} />
-        </View>
+        </View> */}
         <AcceptedList accepted={accepted} concludeAction={concludeSwap} />
       </View>
       <Navigation params={props} />
