@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
 import SwapsService from '../modules/services/SwapsService';
@@ -15,23 +15,40 @@ interface Matches {
 const MatchesPage = (props: any) => {
   const swapsService = new SwapsService();
   const googleBooksService = new GoogleBooksService();
+  const [matchesData, setMatchesData] = useState<Matches[]>([]);
   const [wantedUrl, setWantedUrl] = useState('');
   const [ownedUrl, setOwnedUrl] = useState('');
   const [dinstance, setDistance] = useState(0);
+  const [index, setIndex] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchMatches = async () => {
-      const matches = await swapsService.getSwaps('match');
-      setWantedUrl(await googleBooksService.getBookImageByIsbn(matches[0].wantedBookIsbn));
-      setOwnedUrl(await googleBooksService.getBookImageByIsbn(matches[0].ownedBookIsbn));
-      setDistance(matches[0].distance / 1000);
-      setLoading(false);
+      setMatchesData(await swapsService.getSwaps('match'));
     }
 
     fetchMatches();
   }, []);
 
+  useEffect(() => {
+    const setCard = async () => {
+      setWantedUrl(await googleBooksService.getBookImageByIsbn(matchesData[index].wantedBookIsbn));
+      setOwnedUrl(await googleBooksService.getBookImageByIsbn(matchesData[index].ownedBookIsbn));
+      setDistance(matchesData[index].distance / 1000);
+      setLoading(false);
+    }
+
+    setLoading(true);
+    if (matchesData.length >= index + 1) {
+      setCard();
+    }
+  }, [matchesData, index]);
+
+  const updateMatch = async (state: string) => {
+    console.log(matchesData[index].swapId, state)
+    await swapsService.updateSwap(matchesData[index].swapId, state);
+    setIndex(index + 1);
+  }
 
   return (
     <View style={styles.container}>
@@ -39,19 +56,23 @@ const MatchesPage = (props: any) => {
         <Text style={styles.header}>Matches</Text>
         { !loading && (
           <View style={styles.card}>
-            <Image style={styles.owned} source={{uri: ownedUrl}} resizeMode='stretch' />
+            <Image style={styles.owned} source={{uri: wantedUrl}} resizeMode='stretch' />
             <View style={styles.options}>
               <View style={styles.option}>
                 <Image style={styles.swap} source={require('../assets/img/swap.png')} />
-                <Image style={styles.cancel} source={require('../assets/img/cancel.png')} />
+                <TouchableOpacity onPress={()=>{updateMatch('cancelled')}}>
+                  <Image style={styles.cancel} source={require('../assets/img/cancel.png')} />
+                </TouchableOpacity>
               </View>
-              <Image style={styles.wanted} source={{uri: wantedUrl}} resizeMode='stretch' />
+              <Image style={styles.wanted} source={{uri: ownedUrl}} resizeMode='stretch' />
               <View style={styles.option}>
                 <View style={styles.distance}>
                   <Text style={styles.number}>{dinstance}</Text>
                   <Text style={styles.unit}>km</Text>
                 </View>
-                <Image style={styles.accept} source={require('../assets/img/accept.png')} />
+                <TouchableOpacity onPress={()=>{updateMatch('accepted')}}>
+                  <Image style={styles.accept} source={require('../assets/img/accept.png')} />
+                </TouchableOpacity>
               </View>
             </View>
           </View>

@@ -11,7 +11,7 @@ import SwapService from '../modules/services/SwapsService';
 const AcceptedPage = (props: any) => {
   const googleBookService = new GoogleBooksService();
   const swapService = new SwapService();
-  const [accepted, setAccepted] = useState([] as any[]);
+  const [accepted, setAccepted] = useState<any[]>([]);
 
   const fetchSwaps = async () => {
     const result = await swapService.getSwaps('accepted');
@@ -72,7 +72,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontFamily: 'Roboto-Bold',
     letterSpacing: 2,
-    paddingBottom: 50
   },
   options: {
     borderBottomColor: Colors.lightGray,

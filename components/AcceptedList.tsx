@@ -50,8 +50,6 @@ const styles = StyleSheet.create({
   },
   list: {
     flex: 1,
-    paddingLeft: 25,
-    paddingEnd: 25,
     paddingTop: 15,
     borderTopColor: Colors.lightGray,
     borderTopWidth: 1,
@@ -60,6 +58,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 15,
+    marginLeft: 25,
+    marginEnd: 25,
+    borderRadius: 10,
     backgroundColor: Colors.background,
     ...Shadow,
   },

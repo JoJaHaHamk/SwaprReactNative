@@ -19,8 +19,16 @@ const AddBookPage = (props: any) => {
     const fetchData = async () => {
       if (search != '') {
         const result = await googleBooksService.searchBooks(search);
-        const filteredBooks = result.filter((book: any) => book.volumeInfo.imageLinks?.thumbnail);
-        setBooks(filteredBooks);
+        if (result) {
+          const filteredBooks = result.filter((book: any) => {
+            const hasThumbnail = book.volumeInfo.imageLinks?.thumbnail;
+            const hasISBN13 = book.volumeInfo.industryIdentifiers?.some(
+              (identifier: any) => identifier.type === "ISBN_13"
+            );
+            return hasThumbnail && hasISBN13;
+          });
+          setBooks(filteredBooks);
+        }
       } else {
         setBooks([]);
       }
@@ -33,6 +41,7 @@ const AddBookPage = (props: any) => {
     if (selected != undefined) {
       const book: any = books[selected];
       const isbn = book.volumeInfo.industryIdentifiers.find((identifier: any) => identifier.type === "ISBN_13")?.identifier;
+      console.log(isbn);
       const title = book.volumeInfo.title;
       const author = book.volumeInfo.authors[0];
       const type = option === options[0] ? "owned" : "requested";
@@ -45,7 +54,7 @@ const AddBookPage = (props: any) => {
     <View style={styles.container}>
       <View style={styles.topBar}>
         <Text style={styles.header}>Add Book</Text>
-        <TouchableOpacity onPress={()=>props.navigation.navigate("Books")} activeOpacity={1}>
+        <TouchableOpacity onPress={()=>props.navigation.goBack()} activeOpacity={1}>
           <Image style={styles.image} source={require('../assets/img/back.png')} />
         </TouchableOpacity>
       </View>

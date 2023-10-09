@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
   },
   image: {
     borderRadius: 5,
-    aspectRatio: 6 / 9
+    aspectRatio: 6 / 9,
+    backgroundColor: Colors.lightGray,
   }
 });
 
