@@ -8,7 +8,7 @@ const AcceptedList = (props: any) => {
       <View style={styles.acceptedContainer}>
         <Image
           source={{ uri: item.smallThumbnail1 }}
-          style={styles.image} resizeMode='stretch' />
+          style={styles.image} resizeMode="stretch" />
         <View style={styles.info}>
           <View style={styles.topInfo}>
             <Image source={require('../assets/img/swap.png')} />
@@ -21,14 +21,14 @@ const AcceptedList = (props: any) => {
             <TouchableOpacity style={styles.button} onPress={() => Linking.openURL(`mailto:${item.contactEmail}`)}>
               <Text style={styles.buttonText}>CONTACT</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={() => props.concludeAction(item.id)}>
               <Text style={styles.buttonText}>CONCLUDE</Text>
             </TouchableOpacity>
           </View>
         </View>
         <Image
           source={{ uri: item.smallThumbnail2 }}
-          style={styles.image} resizeMode='stretch' />
+          style={styles.image} resizeMode="stretch" />
       </View >
     );
   };
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     marginEnd: 25,
     borderRadius: 10,
     backgroundColor: Colors.background,
-    ...Shadow
+    ...Shadow,
   },
   info: {
     flex: 1 / 3,
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   buttons: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   button: {
     backgroundColor: Colors.primary,
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   image: {
     borderRadius: 5,
     aspectRatio: 6 / 9,
-    flex: 1 / 3
+    flex: 1 / 3,
   },
   distance: {
     alignSelf: 'flex-start',
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Medium',
     color: Colors.onPrimary,
     fontSize: 10,
-  }
+  },
 });
 
 export default AcceptedList;
