@@ -21,8 +21,7 @@ const ProfilePage = (props: any) => {
       if (user) {
         setUserData(user);
       }
-    }
-
+    };
     fetchUserData();
   }, []);
 
@@ -39,7 +38,7 @@ const ProfilePage = (props: any) => {
                 <Text style={styles.address}>{userData.address}, {userData.city}, {userData.country}</Text>
               </View>
             ) : (
-              <View style={{height: 54}}></View>
+              <View style={{ height: 54 }}></View>
             )}
           </View>
           <View style={styles.profileOptions}>
