@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import { Colors } from '../constants/values';
 
 const GoogleBookList = (props: any) => {
@@ -34,13 +34,14 @@ const GoogleBookList = (props: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    borderTopColor: Colors.lightGray,
+    borderTopWidth: 1,
   },
   list: {
     paddingLeft: 25,
     paddingEnd: 25,
     paddingTop: 10,
-    borderTopColor: Colors.lightGray,
-    borderTopWidth: 1,
+
   },
   imageContainer: {
     flex: 1/3,
@@ -50,6 +51,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     aspectRatio: 6 / 9,
     backgroundColor: Colors.lightGray,
+  },
+  error: {
+    color: 'red',
+    marginLeft: 30,
+    marginTop: 15,
   }
 });
 

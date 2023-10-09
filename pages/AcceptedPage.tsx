@@ -72,7 +72,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontFamily: 'Roboto-Bold',
     letterSpacing: 2,
-    paddingBottom: 50
   },
   options: {
     borderBottomColor: Colors.lightGray,

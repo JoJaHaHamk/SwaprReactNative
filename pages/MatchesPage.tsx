@@ -38,13 +38,14 @@ const MatchesPage = (props: any) => {
       setLoading(false);
     }
 
+    setLoading(true);
     if (matchesData.length >= index + 1) {
-      setLoading(true);
       setCard();
     }
   }, [matchesData, index]);
 
   const updateMatch = async (state: string) => {
+    console.log(matchesData[index].swapId, state)
     await swapsService.updateSwap(matchesData[index].swapId, state);
     setIndex(index + 1);
   }
@@ -55,16 +56,15 @@ const MatchesPage = (props: any) => {
         <Text style={styles.header}>Matches</Text>
         { !loading && (
           <View style={styles.card}>
-            <Image style={styles.owned} source={{uri: ownedUrl}} resizeMode='stretch' />
+            <Image style={styles.owned} source={{uri: wantedUrl}} resizeMode='stretch' />
             <View style={styles.options}>
               <View style={styles.option}>
                 <Image style={styles.swap} source={require('../assets/img/swap.png')} />
                 <TouchableOpacity onPress={()=>{updateMatch('cancelled')}}>
-
+                  <Image style={styles.cancel} source={require('../assets/img/cancel.png')} />
                 </TouchableOpacity>
-                <Image style={styles.cancel} source={require('../assets/img/cancel.png')} />
               </View>
-              <Image style={styles.wanted} source={{uri: wantedUrl}} resizeMode='stretch' />
+              <Image style={styles.wanted} source={{uri: ownedUrl}} resizeMode='stretch' />
               <View style={styles.option}>
                 <View style={styles.distance}>
                   <Text style={styles.number}>{dinstance}</Text>
