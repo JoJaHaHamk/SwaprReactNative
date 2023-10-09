@@ -11,7 +11,7 @@ import SwapService from '../modules/services/SwapsService';
 const AcceptedPage = (props: any) => {
   const googleBookService = new GoogleBooksService();
   const swapService = new SwapService();
-  const [accepted, setAccepted] = useState([]);
+  const [accepted, setAccepted] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {

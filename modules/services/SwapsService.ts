@@ -23,4 +23,26 @@ export default class SwapsService {
       return false;
     }
   }
+
+  async updateSwap(swapId: number, state: string) {
+    const token = await AsyncStorage.getItem('token');
+    const userId = await AsyncStorage.getItem('userId');
+
+    const fullUrl = _api + '/user/' + userId + '/swap/' + swapId;
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': token ?? '',
+    });
+    const response = await fetch(fullUrl, {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify({ state: state })
+    });
+
+    if (response.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

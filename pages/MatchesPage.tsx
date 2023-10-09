@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
 import SwapsService from '../modules/services/SwapsService';
@@ -44,8 +44,10 @@ const MatchesPage = (props: any) => {
     }
   }, [matchesData, index]);
 
-
-
+  const updateMatch = async (state: string) => {
+    await swapsService.updateSwap(matchesData[index].swapId, state);
+    setIndex(index + 1);
+  }
 
   return (
     <View style={styles.container}>
@@ -57,6 +59,9 @@ const MatchesPage = (props: any) => {
             <View style={styles.options}>
               <View style={styles.option}>
                 <Image style={styles.swap} source={require('../assets/img/swap.png')} />
+                <TouchableOpacity onPress={()=>{updateMatch('cancelled')}}>
+
+                </TouchableOpacity>
                 <Image style={styles.cancel} source={require('../assets/img/cancel.png')} />
               </View>
               <Image style={styles.wanted} source={{uri: wantedUrl}} resizeMode='stretch' />
@@ -65,7 +70,9 @@ const MatchesPage = (props: any) => {
                   <Text style={styles.number}>{dinstance}</Text>
                   <Text style={styles.unit}>km</Text>
                 </View>
-                <Image style={styles.accept} source={require('../assets/img/accept.png')} />
+                <TouchableOpacity onPress={()=>{updateMatch('accepted')}}>
+                  <Image style={styles.accept} source={require('../assets/img/accept.png')} />
+                </TouchableOpacity>
               </View>
             </View>
           </View>
