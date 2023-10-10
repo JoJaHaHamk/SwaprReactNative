@@ -23,7 +23,7 @@ export default class UserService {
     }
   }
 
-  async updateUser(username: string, email: string, adress: string, city: string, country: string) {
+  async updateUser(username: string, email: string, address: string, city: string, country: string) {
     const token = await AsyncStorage.getItem('token');
     const userId = await AsyncStorage.getItem('userId');
     
@@ -34,7 +34,7 @@ export default class UserService {
         'Content-Type': 'application/json',
         'Authorization': token ?? '',
       },
-      body: JSON.stringify({ username, email, adress, city, country }),
+      body: JSON.stringify({ username, email, address, city, country }),
     });
 
     if (response.status === 200) {

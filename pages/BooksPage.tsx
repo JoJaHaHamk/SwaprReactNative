@@ -20,8 +20,14 @@ const BooksPage = (props: any) => {
     }
   }
 
+  const onDeleteBook = async (id: string) => {
+    await bookService.deleteBook(id);
+    setBooksData(booksData.filter((book: any) => book.id != id));
+  }
+
   useFocusEffect(
     useCallback(() => {
+      console.log('fetching')
       fetchBooksData();
     }, [searchText, filter])
   );
@@ -48,7 +54,7 @@ const BooksPage = (props: any) => {
               <Text style={[filter == 'requested' ? styles.selectedOption : styles.filterOption, {borderTopRightRadius: 5, borderBottomRightRadius: 5}]}>WANTED BOOKS</Text>
             </TouchableOpacity>
         </View>
-        <BookList books={booksData} />
+        <BookList books={booksData} deleteBook={onDeleteBook} />
       </View>
       <Navigation params={props} />
     </View>
