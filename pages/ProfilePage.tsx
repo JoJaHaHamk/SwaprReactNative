@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
 import UserService from '../modules/services/UserService';
+import { useFocusEffect } from '@react-navigation/native';
 
 interface User {
   username: string;
@@ -15,15 +16,16 @@ const ProfilePage = (props: any) => {
   const userService = new UserService();
   const [userData, setUserData] = useState<User>();
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const user = await userService.getUser();
-      if (user) {
-        setUserData(user);
-      }
-    };
+  const fetchUserData = async () => {
+    const user = await userService.getUser();
+    if (user) {
+      setUserData(user);
+    }
+  };
+
+  useFocusEffect(() => {
     fetchUserData();
-  }, []);
+  });
 
   return (
     <View style={styles.container}>
