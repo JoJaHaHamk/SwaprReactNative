@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { View, StyleSheet, Text, TextInput, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TextInput, Image, TouchableOpacity, Modal } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import BookList from '../components/BookList';
 import Navigation from '../components/Navigation';
@@ -11,6 +11,8 @@ const BooksPage = (props: any) => {
   const [booksData, setBooksData] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [filter, setFilter] = useState('owned');
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [bookToDeleteId, setBookToDeleteId] = useState('');
 
   const fetchBooksData = async () => {
     setBooksData([]);
@@ -20,14 +22,55 @@ const BooksPage = (props: any) => {
     }
   }
 
+  const onLongPressBook = (id: string) => {
+    setBookToDeleteId(id);
+    setModalVisible(true);
+  }
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  const onDeleteBook = async (id: string) => {
+    await bookService.deleteBook(id);
+    setBooksData(booksData.filter((book: any) => book.id != id));
+  }
+
   useFocusEffect(
     useCallback(() => {
+      console.log('fetching')
       fetchBooksData();
     }, [searchText, filter])
   );
 
   return (
     <View style={styles.container}>
+      <Modal
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={closeModal}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>Confirm deletion?</Text>
+            <TouchableOpacity
+              style={styles.modalDelete}
+              onPress={() => {
+                onDeleteBook(bookToDeleteId);
+                closeModal();
+              }}
+            >
+              <Text style={styles.modalButtonText}>Delete</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.modalCancel}
+              onPress={closeModal}
+            >
+              <Text style={styles.modalButtonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.content}>
         <Text style={styles.header}>Books</Text>
         <View style={styles.search}>
@@ -48,7 +91,7 @@ const BooksPage = (props: any) => {
               <Text style={[filter == 'requested' ? styles.selectedOption : styles.filterOption, {borderTopRightRadius: 5, borderBottomRightRadius: 5}]}>WANTED BOOKS</Text>
             </TouchableOpacity>
         </View>
-        <BookList books={booksData} />
+        <BookList books={booksData} deleteBook={onLongPressBook} />
       </View>
       <Navigation params={props} />
     </View>
@@ -56,6 +99,40 @@ const BooksPage = (props: any) => {
 };
 
 const styles = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 20,
+  },
+  modalDelete: {
+    backgroundColor: 'red',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginVertical: 10,
+  },
+  modalCancel: {
+    backgroundColor: Colors.primary,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginVertical: 10,
+  },
+  modalButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
   container: {
     flex: 1
   },

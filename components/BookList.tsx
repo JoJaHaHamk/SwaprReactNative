@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, FlatList, Image } from 'react-native';
+import { View, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import { Colors } from '../constants/values';
 import GoogleBooksService from '../modules/services/GoogleBooksService';
 
@@ -22,13 +22,13 @@ const BookList = (props: any) => {
     const imageUrl = imageUrls[index];
 
     return (
-      <View style={styles.imageContainer}>
+      <TouchableOpacity style={styles.imageContainer} onLongPress={()=>props.deleteBook(item.id)}>
         <Image 
           source={{ uri: imageUrl }}
           style={styles.image}
           resizeMode='stretch'
         />
-      </View>
+      </TouchableOpacity>
     );
   }
 

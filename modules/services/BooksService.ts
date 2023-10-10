@@ -49,4 +49,27 @@ export default class BooksService {
       return false;
     }
   }
+
+  async deleteBook(bookId: string) {
+    const token = await AsyncStorage.getItem('token');
+    const userId = await AsyncStorage.getItem('userId');
+
+    let fullUrl = _api + '/user/' + userId + '/book/' + bookId;
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': token ?? '',
+    });
+    const response = await fetch(fullUrl, {
+      method: 'DELETE',
+      headers
+    });
+
+    if (response.status === 200) {
+      console.log('Book deleted' + bookId);
+      return true;
+    } else {
+      console.log('Book failed' + bookId);
+      return false;
+    }
+  }
 }
