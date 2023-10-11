@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     aspectRatio: 6 / 9,
     flex: 1 / 3,
+    backgroundColor: Colors.lightGray,
   },
   distance: {
     alignSelf: 'flex-start',

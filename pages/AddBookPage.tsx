@@ -41,6 +41,7 @@ const AddBookPage = (props: any) => {
     if (selected != undefined) {
       const book: any = books[selected];
       const isbn = book.volumeInfo.industryIdentifiers.find((identifier: any) => identifier.type === "ISBN_13")?.identifier;
+      console.log(isbn);
       const title = book.volumeInfo.title;
       const author = book.volumeInfo.authors[0];
       const type = option === options[0] ? "owned" : "requested";

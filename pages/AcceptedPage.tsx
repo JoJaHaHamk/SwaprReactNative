@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, TextInput, Image, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import AcceptedList from '../components/AcceptedList';
 import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
@@ -56,6 +56,8 @@ const AcceptedPage = (props: any) => {
         </View> */}
         {isLoading ? (
           <ActivityIndicator style={styles.loading} color={Colors.primary} size='large' />
+        ) : accepted.length == 0 ? (
+          <Text style={styles.emptyMessage}>No accepted matches found...</Text>
         ) : (
           <AcceptedList accepted={accepted} concludeAction={concludeSwap} />
         )}
@@ -102,6 +104,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     fontSize: 16,
     padding: 16,
+  },
+  emptyMessage: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 20,
+    fontFamily: 'Roboto-Regular',
   },
   loading: {
     flex: 1,
