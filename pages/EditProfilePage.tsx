@@ -4,7 +4,7 @@ import { Colors, Shadow } from '../constants/values';
 import UserService from '../modules/services/UserService';
 
 const EditProfilePage = (props: any) => {
-  const userService = new UserService();
+  const userService = new UserService(props.navigation.navigate);
   const [userName, setUserName] = useState('');
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');

@@ -8,7 +8,7 @@ import { Colors, Shadow } from '../constants/values';
 import BookService from '../modules/services/BooksService';
 
 const BooksPage = (props: any) => {
-  const bookService = new BookService();
+  const bookService = new BookService(props.navigation.navigate);
   const [booksData, setBooksData] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [filter, setFilter] = useState('owned');

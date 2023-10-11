@@ -10,7 +10,7 @@ import SwapService from '../modules/services/SwapsService';
 
 const AcceptedPage = (props: any) => {
   const googleBookService = new GoogleBooksService();
-  const swapService = new SwapService();
+  const swapService = new SwapService(props.navigation.navigate);
   const [accepted, setAccepted] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 

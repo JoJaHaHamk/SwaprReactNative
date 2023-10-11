@@ -13,7 +13,7 @@ interface Matches {
 }
 
 const MatchesPage = (props: any) => {
-  const swapsService = new SwapsService();
+  const swapsService = new SwapsService(props.navigation.navigate);
   const googleBooksService = new GoogleBooksService();
   const [matchesData, setMatchesData] = useState<Matches[]>([]);
   const [wantedUrl, setWantedUrl] = useState('');

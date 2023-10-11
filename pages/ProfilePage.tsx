@@ -13,7 +13,7 @@ interface User {
 }
 
 const ProfilePage = (props: any) => {
-  const userService = new UserService();
+  const userService = new UserService(props.navigation.navigate);
   const [userData, setUserData] = useState<User>();
 
   const fetchUserData = async () => {

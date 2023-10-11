@@ -8,7 +8,7 @@ import BooksService from '../modules/services/BooksService';
 
 const AddBookPage = (props: any) => {
   const googleBooksService = new GoogleBooksService();
-  const booksService = new BooksService();
+  const booksService = new BooksService(props.navigation.navigate);
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<number>();
