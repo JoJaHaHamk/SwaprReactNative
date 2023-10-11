@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator, Platform } from 'react-native';
 import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
 import SwapsService from '../modules/services/SwapsService';
@@ -18,7 +18,7 @@ const MatchesPage = (props: any) => {
   const [matchesData, setMatchesData] = useState<Matches[]>([]);
   const [wantedUrl, setWantedUrl] = useState('');
   const [ownedUrl, setOwnedUrl] = useState('');
-  const [dinstance, setDistance] = useState(0);
+  const [dinstance, setDistance] = useState('');
   const [index, setIndex] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -38,7 +38,7 @@ const MatchesPage = (props: any) => {
       const setCard = async () => {
         setWantedUrl(await googleBooksService.getBookImageByIsbn(matchesData[index].wantedBookIsbn));
         setOwnedUrl(await googleBooksService.getBookImageByIsbn(matchesData[index].ownedBookIsbn));
-        setDistance(matchesData[index].distance / 1000);
+        setDistance((matchesData[index].distance / 1000).toFixed(1));
         setLoading(false);
       }
   
@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   header: {
+    paddingTop: Platform.OS === 'ios' ? 60 : 30,
     backgroundColor: Colors.primary,
     color: Colors.onPrimary,
     padding: 30,

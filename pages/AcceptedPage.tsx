@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Text, ActivityIndicator, Platform } from 'react-native';
 import AcceptedList from '../components/AcceptedList';
 import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   header: {
+    paddingTop: Platform.OS === 'ios' ? 60 : 30,
     backgroundColor: Colors.primary,
     color: Colors.onPrimary,
     padding: 30,

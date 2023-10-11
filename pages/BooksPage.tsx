@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, StyleSheet, Text, TextInput, Image, TouchableOpacity, Modal } from 'react-native';
+import { View, StyleSheet, Text, TextInput, Image, TouchableOpacity, Modal, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import BookList from '../components/BookList';
@@ -157,6 +157,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
+    paddingTop: Platform.OS === 'ios' ? 60 : 30,
     backgroundColor: Colors.primary,
     color: Colors.onPrimary,
     padding: 30,

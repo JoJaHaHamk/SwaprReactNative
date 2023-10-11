@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform, ScrollView } from 'react-native';
 import { Colors, Shadow } from '../constants/values';
 import AuthService from '../modules/services/AuthService';
  
@@ -24,7 +24,7 @@ const RegisterPage = (props: any) => {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.header}>Register</Text>
       <View style={styles.form}>
         <Text style={styles.label}>NAME</Text>
@@ -55,21 +55,21 @@ const RegisterPage = (props: any) => {
         <Text style={styles.label}>ADDRESS</Text>
         <TextInput
           style={styles.input}
-          placeholder="Visamäentie 21"
+          placeholder="Address line"
           placeholderTextColor="#B8B8B8"
           value={address}
           onChangeText={(text) => setAddress(text)}
         />
         <TextInput
           style={styles.input}
-          placeholder="Hämeenlinna"
+          placeholder="City"
           placeholderTextColor="#B8B8B8"
           value={city}
           onChangeText={(text) => setCity(text)}
         />
         <TextInput
           style={styles.input}
-          placeholder="Finland"
+          placeholder="Country"
           placeholderTextColor="#B8B8B8"
           value={country}
           onChangeText={(text) => setCountry(text)}
@@ -84,7 +84,7 @@ const RegisterPage = (props: any) => {
         </View>
         {error ? <Text style={styles.error}>{error}</Text> : null}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   header: {
+    paddingTop: Platform.OS === 'ios' ? 60 : 0,
     fontSize: 32,
     marginHorizontal: 45,
     marginTop: 30,
