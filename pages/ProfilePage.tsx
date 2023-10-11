@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
 import UserService from '../modules/services/UserService';
+import { useFocusEffect } from '@react-navigation/native';
 
 interface User {
   username: string;
@@ -12,19 +13,22 @@ interface User {
 }
 
 const ProfilePage = (props: any) => {
-  const userService = new UserService();
+  const userService = new UserService(props.navigation.navigate);
   const [userData, setUserData] = useState<User>();
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const user = await userService.getUser();
-      if (user) {
-        setUserData(user);
-      }
+  const fetchUserData = async () => {
+    setLoading(true);
+    const user = await userService.getUser();
+    if (user) {
+      setUserData(user);
     }
+    setLoading(false);
+  };
 
+  useFocusEffect(() => {
     fetchUserData();
-  }, []);
+  });
 
   return (
     <View style={styles.container}>
@@ -39,7 +43,9 @@ const ProfilePage = (props: any) => {
                 <Text style={styles.address}>{userData.address}, {userData.city}, {userData.country}</Text>
               </View>
             ) : (
-              <View style={{height: 54}}></View>
+              <View style={{ height: 54 }}>
+                <ActivityIndicator style={styles.loading} color={Colors.primary} size='small' />
+              </View>
             )}
           </View>
           <View style={styles.profileOptions}>
@@ -139,6 +145,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     flex: 1,
   },
+  loading: {
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  }
 });
 
 export default ProfilePage;

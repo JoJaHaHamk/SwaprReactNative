@@ -22,14 +22,14 @@ export default class AuthService {
     }
   }
 
-  async register(username: string, email: string, password: string, adress: string, city: string, country: string) {
+  async register(username: string, email: string, password: string, address: string, city: string, country: string) {
     let fullUrl = _api + '/register';
     const response = await fetch(fullUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, email, password, adress, city, country }),
+      body: JSON.stringify({ username, email, password, address, city, country }),
     });
 
     if (response.status === 200) {
