@@ -1,5 +1,6 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, StyleSheet, Text, TextInput, Image, TouchableOpacity, Modal } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import BookList from '../components/BookList';
 import Navigation from '../components/Navigation';
@@ -13,13 +14,28 @@ const BooksPage = (props: any) => {
   const [filter, setFilter] = useState('owned');
   const [isModalVisible, setModalVisible] = useState(false);
   const [bookToDeleteId, setBookToDeleteId] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      const token = await AsyncStorage.getItem('token');
+      const userId = await AsyncStorage.getItem('userId');
+      if (!token || !userId) {
+        props.navigation.navigate('Login');
+      }      
+    };
+
+    checkLogin();
+  }, []);
 
   const fetchBooksData = async () => {
+    setLoading(true);
     setBooksData([]);
     const books = await bookService.getBooks(filter, searchText);
     if (books) {
       setBooksData(books);
     }
+    setLoading(false);
   }
 
   const onLongPressBook = (id: string) => {
@@ -90,7 +106,7 @@ const BooksPage = (props: any) => {
               <Text style={[filter == 'requested' ? styles.selectedOption : styles.filterOption, {borderTopRightRadius: 5, borderBottomRightRadius: 5}]}>WANTED BOOKS</Text>
             </TouchableOpacity>
         </View>
-        <BookList books={booksData} deleteBook={onLongPressBook} />
+        <BookList books={booksData} deleteBook={onLongPressBook} loadingBooks={loading} />
       </View>
       <Navigation params={props} />
     </View>

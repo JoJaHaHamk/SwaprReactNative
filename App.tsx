@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BooksPage from './pages/BooksPage';
@@ -14,10 +14,11 @@ import RegisterPage from './pages/RegisterPage';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+
   return (
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName="Books"
+        initialRouteName='Books'
         screenOptions={{headerShown: false, animation: 'none'}}
       >
         <Stack.Screen name="Books" component={BooksPage} />
