@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, ActivityIndicator, Platform } from 'react-native';
 import { Colors, Shadow } from '../constants/values'; 
 import GoogleBookList from '../components/GoogleBookList';
 import DropDown from '../components/DropDown';
@@ -43,7 +43,6 @@ const AddBookPage = (props: any) => {
     if (selected != undefined) {
       const book: any = books[selected];
       const isbn = book.volumeInfo.industryIdentifiers.find((identifier: any) => identifier.type === "ISBN_13")?.identifier;
-      console.log(isbn);
       const title = book.volumeInfo.title;
       const author = book.volumeInfo.authors[0];
       const type = option === options[0] ? "owned" : "requested";
@@ -97,6 +96,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   topBar: {
+    paddingTop: Platform.OS === 'ios' ? 60 : 0,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Colors.primary,

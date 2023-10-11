@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Platform } from 'react-native';
 import { Colors, Shadow } from '../constants/values';
 import AuthService from '../modules/services/AuthService';
 
@@ -63,8 +63,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   header: {
+    paddingTop: Platform.OS === 'ios' ? 60 : 0,
     backgroundColor: Colors.background,
-    height: 125,
+    height: Platform.OS === 'ios' ? 185 : 125,
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Platform } from 'react-native';
 import { Colors, Shadow } from '../constants/values';
 import UserService from '../modules/services/UserService';
 
@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   topBar: {
+    paddingTop: Platform.OS === 'ios' ? 60 : 0,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Colors.primary,
