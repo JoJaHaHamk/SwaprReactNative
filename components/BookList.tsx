@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, FlatList, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Colors } from '../constants/values';
 import GoogleBooksService from '../modules/services/GoogleBooksService';
 
@@ -34,13 +34,15 @@ const BookList = (props: any) => {
 
   return (
     <View style={styles.container}>
-      { imageUrls.length > 0 && (
+      { imageUrls.length > 0 ? (
         <FlatList style={styles.list}
           data={books}
           keyExtractor={(item) => item.id.toString()}
           numColumns={3}
           renderItem={renderItem}
         />
+      ) : (
+        <ActivityIndicator style={styles.loading} color={Colors.primary} size='large' />
       )}
     </View>
   );
@@ -65,6 +67,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     aspectRatio: 6 / 9,
     backgroundColor: Colors.lightGray,
+  },
+  loading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
 

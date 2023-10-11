@@ -65,10 +65,8 @@ export default class BooksService {
     });
 
     if (response.status === 200) {
-      console.log('Book deleted' + bookId);
       return true;
     } else {
-      console.log('Book failed' + bookId);
       return false;
     }
   }

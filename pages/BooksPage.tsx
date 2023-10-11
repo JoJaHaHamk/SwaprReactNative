@@ -38,7 +38,6 @@ const BooksPage = (props: any) => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('fetching')
       fetchBooksData();
     }, [searchText, filter])
   );

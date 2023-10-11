@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
 import SwapsService from '../modules/services/SwapsService';
@@ -45,7 +45,6 @@ const MatchesPage = (props: any) => {
   }, [matchesData, index]);
 
   const updateMatch = async (state: string) => {
-    console.log(matchesData[index].swapId, state)
     await swapsService.updateSwap(matchesData[index].swapId, state);
     setIndex(index + 1);
   }
@@ -54,7 +53,7 @@ const MatchesPage = (props: any) => {
     <View style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.header}>Matches</Text>
-        { !loading && (
+        { !loading ? (
           <View style={styles.card}>
             <Image style={styles.owned} source={{uri: wantedUrl}} resizeMode='stretch' />
             <View style={styles.options}>
@@ -76,6 +75,8 @@ const MatchesPage = (props: any) => {
               </View>
             </View>
           </View>
+        ) : (
+          <ActivityIndicator style={styles.loading} color={Colors.primary} size='large' />
         )}
       </View>
       <Navigation params={props} />
@@ -166,6 +167,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Medium',
     color: Colors.onPrimary,
     fontSize: 10,
+  },
+  loading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
 
