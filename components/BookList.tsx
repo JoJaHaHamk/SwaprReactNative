@@ -58,8 +58,6 @@ const styles = StyleSheet.create({
     paddingLeft: 25,
     paddingEnd: 25,
     paddingTop: 10,
-    borderTopColor: Colors.lightGray,
-    borderTopWidth: 1,
   },
   imageContainer: {
     flex: 1/3,

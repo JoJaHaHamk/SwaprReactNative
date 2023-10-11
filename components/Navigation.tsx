@@ -33,7 +33,7 @@ const Navigation = ({params}: NavigationProps) => {
 const styles = StyleSheet.create({
   container: {
     zIndex: 500,
-    flex: 1/11,
+    height: 72,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

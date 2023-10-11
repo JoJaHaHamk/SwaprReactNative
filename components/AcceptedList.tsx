@@ -80,9 +80,9 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: Colors.primary,
-    padding: 10,
+    padding: 8,
     borderRadius: 10,
-    marginTop: 10,
+    marginTop: 5,
   },
   buttonText: {
     textAlign: 'center',

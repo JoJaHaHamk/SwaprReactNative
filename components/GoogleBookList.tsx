@@ -34,8 +34,6 @@ const GoogleBookList = (props: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderTopColor: Colors.lightGray,
-    borderTopWidth: 1,
   },
   list: {
     paddingLeft: 25,

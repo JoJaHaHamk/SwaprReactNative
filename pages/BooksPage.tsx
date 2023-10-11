@@ -98,13 +98,15 @@ const BooksPage = (props: any) => {
           />
           <Image style={styles.searchIcon} source={require('../assets/img/search.png')} />
         </View>
-        <View style={styles.filterOptions}>
-            <TouchableOpacity style={styles.filterOptionButton} onPress={()=>{setFilter('owned')}}>
-              <Text style={[filter == 'owned' ? styles.selectedOption : styles.filterOption, {borderTopLeftRadius: 5, borderBottomLeftRadius: 5}]}>OWNED BOOKS</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.filterOptionButton} onPress={()=>{setFilter('requested')}}>
-              <Text style={[filter == 'requested' ? styles.selectedOption : styles.filterOption, {borderTopRightRadius: 5, borderBottomRightRadius: 5}]}>WANTED BOOKS</Text>
-            </TouchableOpacity>
+        <View style={styles.filter}>
+          <View style={styles.filterOptions}>
+              <TouchableOpacity style={styles.filterOptionButton} onPress={()=>{setFilter('owned')}}>
+                <Text style={[filter == 'owned' ? styles.selectedOption : styles.filterOption, {borderTopLeftRadius: 5, borderBottomLeftRadius: 5}]}>OWNED BOOKS</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.filterOptionButton} onPress={()=>{setFilter('requested')}}>
+                <Text style={[filter == 'requested' ? styles.selectedOption : styles.filterOption, {borderTopRightRadius: 5, borderBottomRightRadius: 5}]}>WANTED BOOKS</Text>
+              </TouchableOpacity>
+          </View>
         </View>
         <BookList books={booksData} deleteBook={onLongPressBook} loadingBooks={loading} />
       </View>
@@ -162,6 +164,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
     letterSpacing: 2,
     paddingBottom: 50
+  },
+  filter: {
+    borderBottomColor: Colors.lightGray,
+    borderBottomWidth: 1,
   },
   search: {
     marginTop: -30,
