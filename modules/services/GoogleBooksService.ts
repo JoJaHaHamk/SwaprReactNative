@@ -3,7 +3,8 @@ import { _key } from '../../config';
 
 export default class GoogleBooksService {
   async getBookImageByIsbn(isbn: string) {
-    const fullUrl = _api + '?q=isbn:' + isbn;
+    let fullUrl = _api + '?q=isbn:' + isbn;
+    // fullUrl += '&key=' + _key;
     const headers = new Headers({
       'Content-Type': 'application/json',
     });
@@ -21,7 +22,8 @@ export default class GoogleBooksService {
   }
 
   async searchBooks(title: string) {
-    const fullUrl = _api + '?q=intitle:"' + title + '""&printType=books&maxResults=24';
+    let fullUrl = _api + '?q=intitle:"' + title + '""&printType=books&maxResults=24';
+    // fullUrl += '&key=' + _key;
     const headers = new Headers({
       'Content-Type': 'application/json',
     });

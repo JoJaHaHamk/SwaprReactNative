@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
 import SwapsService from '../modules/services/SwapsService';
@@ -13,39 +13,46 @@ interface Matches {
 }
 
 const MatchesPage = (props: any) => {
-  const swapsService = new SwapsService();
+  const swapsService = new SwapsService(props.navigation.navigate);
   const googleBooksService = new GoogleBooksService();
   const [matchesData, setMatchesData] = useState<Matches[]>([]);
   const [wantedUrl, setWantedUrl] = useState('');
   const [ownedUrl, setOwnedUrl] = useState('');
   const [dinstance, setDistance] = useState(0);
   const [index, setIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchMatches = async () => {
-      setMatchesData(await swapsService.getSwaps('match'));
+      setLoading(true);
+      const data = await swapsService.getSwaps('match');
+      if (data.length > 0) setMatchesData(data);
+      setLoading(false);
     }
 
     fetchMatches();
   }, []);
 
   useEffect(() => {
-    const setCard = async () => {
-      setWantedUrl(await googleBooksService.getBookImageByIsbn(matchesData[index].wantedBookIsbn));
-      setOwnedUrl(await googleBooksService.getBookImageByIsbn(matchesData[index].ownedBookIsbn));
-      setDistance(matchesData[index].distance / 1000);
-      setLoading(false);
-    }
-
-    setLoading(true);
-    if (matchesData.length >= index + 1) {
-      setCard();
+    if (matchesData.length > 0) {
+      const setCard = async () => {
+        setWantedUrl(await googleBooksService.getBookImageByIsbn(matchesData[index].wantedBookIsbn));
+        setOwnedUrl(await googleBooksService.getBookImageByIsbn(matchesData[index].ownedBookIsbn));
+        setDistance(matchesData[index].distance / 1000);
+        setLoading(false);
+      }
+  
+      setLoading(true);
+      if (matchesData.length >= index + 1) {
+        setCard();
+      } else {
+        setMatchesData([]);
+        setLoading(false);
+      }
     }
   }, [matchesData, index]);
 
   const updateMatch = async (state: string) => {
-    console.log(matchesData[index].swapId, state)
     await swapsService.updateSwap(matchesData[index].swapId, state);
     setIndex(index + 1);
   }
@@ -54,28 +61,34 @@ const MatchesPage = (props: any) => {
     <View style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.header}>Matches</Text>
-        { !loading && (
-          <View style={styles.card}>
-            <Image style={styles.owned} source={{uri: wantedUrl}} resizeMode='stretch' />
-            <View style={styles.options}>
-              <View style={styles.option}>
-                <Image style={styles.swap} source={require('../assets/img/swap.png')} />
-                <TouchableOpacity onPress={()=>{updateMatch('cancelled')}}>
-                  <Image style={styles.cancel} source={require('../assets/img/cancel.png')} />
-                </TouchableOpacity>
-              </View>
-              <Image style={styles.wanted} source={{uri: ownedUrl}} resizeMode='stretch' />
-              <View style={styles.option}>
-                <View style={styles.distance}>
-                  <Text style={styles.number}>{dinstance}</Text>
-                  <Text style={styles.unit}>km</Text>
+        { !loading ? (
+          matchesData.length == 0 ? (
+            <Text style={styles.emptyMessage}>No matches found...</Text>
+          ) : (
+            <View style={styles.card}>
+              <Image style={styles.owned} source={{uri: wantedUrl}} resizeMode='stretch' />
+              <View style={styles.options}>
+                <View style={styles.option}>
+                  <Image style={styles.swap} source={require('../assets/img/swap.png')} />
+                  <TouchableOpacity onPress={()=>{updateMatch('cancelled')}}>
+                    <Image style={styles.cancel} source={require('../assets/img/cancel.png')} />
+                  </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={()=>{updateMatch('accepted')}}>
-                  <Image style={styles.accept} source={require('../assets/img/accept.png')} />
-                </TouchableOpacity>
+                <Image style={styles.wanted} source={{uri: ownedUrl}} resizeMode='stretch' />
+                <View style={styles.option}>
+                  <View style={styles.distance}>
+                    <Text style={styles.number}>{dinstance}</Text>
+                    <Text style={styles.unit}>km</Text>
+                  </View>
+                  <TouchableOpacity onPress={()=>{updateMatch('accepted')}}>
+                    <Image style={styles.accept} source={require('../assets/img/accept.png')} />
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-          </View>
+          )
+        ) : (
+          <ActivityIndicator style={styles.loading} color={Colors.primary} size='large' />
         )}
       </View>
       <Navigation params={props} />
@@ -97,11 +110,10 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontFamily: 'Roboto-Bold',
     letterSpacing: 2,
-    paddingBottom: 50
   },
   card: {
     flex: 1,
-    marginTop: -30,
+    marginTop: 30,
     marginBottom: 45,
     flexDirection: 'column',
     alignItems: 'center',
@@ -115,13 +127,15 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     margin: 30,
     marginBottom: 15,
-    aspectRatio: 6 / 9
+    aspectRatio: 6 / 9,
+    backgroundColor: Colors.lightGray,
   },
   wanted: {
     flex: 1/3,
     marginBottom: 25,
     borderRadius: 5,
     aspectRatio: 6 / 9,
+    backgroundColor: Colors.lightGray,
   },
   options: {
     flexDirection: 'row',
@@ -166,6 +180,17 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Medium',
     color: Colors.onPrimary,
     fontSize: 10,
+  },
+  emptyMessage: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 20,
+    fontFamily: 'Roboto-Regular',
+  },
+  loading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
 

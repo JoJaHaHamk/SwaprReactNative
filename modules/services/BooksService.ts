@@ -2,6 +2,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { _api } from '../../config';
 
 export default class BooksService {
+  navigate: any;
+
+  constructor(navigate: any) {
+    this.navigate = navigate;
+  }
+
   async getBooks(type: string, search: string) {
     const token = await AsyncStorage.getItem('token');
     const userId = await AsyncStorage.getItem('userId');
@@ -23,6 +29,7 @@ export default class BooksService {
       const data = await response.json();
       return data;
     } else {
+      if (response.status === 401) this.navigate('Login');
       return false;
     }
   }
@@ -46,6 +53,7 @@ export default class BooksService {
       const data = await response.json();
       return data;
     } else {
+      if (response.status === 401) this.navigate('Login');
       return false;
     }
   }
@@ -65,10 +73,9 @@ export default class BooksService {
     });
 
     if (response.status === 200) {
-      console.log('Book deleted' + bookId);
       return true;
     } else {
-      console.log('Book failed' + bookId);
+      if (response.status === 401) this.navigate('Login');
       return false;
     }
   }

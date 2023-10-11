@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, TextInput, Image } from 'react-native';
+import { View, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import AcceptedList from '../components/AcceptedList';
 import Navigation from '../components/Navigation';
 import { Colors, Shadow } from '../constants/values';
@@ -10,10 +10,12 @@ import SwapService from '../modules/services/SwapsService';
 
 const AcceptedPage = (props: any) => {
   const googleBookService = new GoogleBooksService();
-  const swapService = new SwapService();
+  const swapService = new SwapService(props.navigation.navigate);
   const [accepted, setAccepted] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchSwaps = async () => {
+    setIsLoading(true);
     const result = await swapService.getSwaps('accepted');
     if (result) {
       const promises = result.map(async (item: any) => {
@@ -30,6 +32,7 @@ const AcceptedPage = (props: any) => {
       const returnArray = await Promise.all(promises);
       setAccepted(returnArray);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -51,7 +54,13 @@ const AcceptedPage = (props: any) => {
           <TextInput style={styles.input} placeholder="Search for a book" placeholderTextColor="#B8B8B8" />
           <Image style={styles.searchIcon} source={require('../assets/img/search.png')} />
         </View> */}
-        <AcceptedList accepted={accepted} concludeAction={concludeSwap} />
+        {isLoading ? (
+          <ActivityIndicator style={styles.loading} color={Colors.primary} size='large' />
+        ) : accepted.length == 0 ? (
+          <Text style={styles.emptyMessage}>No accepted matches found...</Text>
+        ) : (
+          <AcceptedList accepted={accepted} concludeAction={concludeSwap} />
+        )}
       </View>
       <Navigation params={props} />
     </View>
@@ -96,6 +105,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 16,
   },
+  emptyMessage: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 20,
+    fontFamily: 'Roboto-Regular',
+  },
+  loading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 });
 
 export default AcceptedPage;

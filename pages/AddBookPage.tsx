@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Colors, Shadow } from '../constants/values'; 
 import GoogleBookList from '../components/GoogleBookList';
 import DropDown from '../components/DropDown';
@@ -8,16 +8,18 @@ import BooksService from '../modules/services/BooksService';
 
 const AddBookPage = (props: any) => {
   const googleBooksService = new GoogleBooksService();
-  const booksService = new BooksService();
+  const booksService = new BooksService(props.navigation.navigate);
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<number>();
   const options = ['I own this book', "I want this book"];
   const [option, setOption] = useState<string>(options[0]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       if (search != '') {
+        setLoading(true);
         const result = await googleBooksService.searchBooks(search);
         if (result) {
           const filteredBooks = result.filter((book: any) => {
@@ -29,11 +31,11 @@ const AddBookPage = (props: any) => {
           });
           setBooks(filteredBooks);
         }
+        setLoading(false);
       } else {
         setBooks([]);
       }
     };
-
     fetchData();
   }, [search]);
 
@@ -59,17 +61,23 @@ const AddBookPage = (props: any) => {
         </TouchableOpacity>
       </View>
       <View style={styles.form}>
-        <View style={styles.search}>
-          <TextInput 
-            style={styles.input}
-            placeholder="Search for a book"
-            placeholderTextColor="#B8B8B8"
-            onChangeText={text => setSearch(text)}
-            value={search}
-          />
-          <Image style={styles.searchIcon} source={require('../assets/img/search.png')} />
+        <View style={styles.options}>
+          <View style={styles.search}>
+            <TextInput 
+              style={styles.input}
+              placeholder="Search for a book"
+              placeholderTextColor="#B8B8B8"
+              onChangeText={text => setSearch(text)}
+              value={search}
+            />
+            <Image style={styles.searchIcon} source={require('../assets/img/search.png')} />
+          </View>
         </View>
-        <GoogleBookList books={books} onSelected={setSelected} selected={selected} />
+        { loading ? (
+          <ActivityIndicator style={styles.loading} color={Colors.primary} size='large' />
+        ) : (
+          <GoogleBookList books={books} onSelected={setSelected} selected={selected} />
+        )}
         <View style={styles.addOptions}>
           <View style={styles.dropdownContainer}>
             <DropDown options={options} option={option} onOptionChange={setOption} />
@@ -104,6 +112,10 @@ const styles = StyleSheet.create({
   },
   image: {
     marginRight: 30,
+  },
+  options: {
+    borderBottomColor: Colors.lightGray,
+    borderBottomWidth: 1,
   },
   form: {
     flex: 1,
@@ -151,6 +163,11 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     paddingHorizontal: 32,
     marginRight: 30,
+  },
+  loading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
 

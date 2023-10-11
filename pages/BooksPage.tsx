@@ -1,5 +1,6 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, StyleSheet, Text, TextInput, Image, TouchableOpacity, Modal } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import BookList from '../components/BookList';
 import Navigation from '../components/Navigation';
@@ -7,19 +8,34 @@ import { Colors, Shadow } from '../constants/values';
 import BookService from '../modules/services/BooksService';
 
 const BooksPage = (props: any) => {
-  const bookService = new BookService();
+  const bookService = new BookService(props.navigation.navigate);
   const [booksData, setBooksData] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [filter, setFilter] = useState('owned');
   const [isModalVisible, setModalVisible] = useState(false);
   const [bookToDeleteId, setBookToDeleteId] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      const token = await AsyncStorage.getItem('token');
+      const userId = await AsyncStorage.getItem('userId');
+      if (!token || !userId) {
+        props.navigation.navigate('Login');
+      }      
+    };
+
+    checkLogin();
+  }, []);
 
   const fetchBooksData = async () => {
+    setLoading(true);
     setBooksData([]);
     const books = await bookService.getBooks(filter, searchText);
     if (books) {
       setBooksData(books);
     }
+    setLoading(false);
   }
 
   const onLongPressBook = (id: string) => {
@@ -38,7 +54,6 @@ const BooksPage = (props: any) => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('fetching')
       fetchBooksData();
     }, [searchText, filter])
   );
@@ -83,15 +98,17 @@ const BooksPage = (props: any) => {
           />
           <Image style={styles.searchIcon} source={require('../assets/img/search.png')} />
         </View>
-        <View style={styles.filterOptions}>
-            <TouchableOpacity style={styles.filterOptionButton} onPress={()=>{setFilter('owned')}}>
-              <Text style={[filter == 'owned' ? styles.selectedOption : styles.filterOption, {borderTopLeftRadius: 5, borderBottomLeftRadius: 5}]}>OWNED BOOKS</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.filterOptionButton} onPress={()=>{setFilter('requested')}}>
-              <Text style={[filter == 'requested' ? styles.selectedOption : styles.filterOption, {borderTopRightRadius: 5, borderBottomRightRadius: 5}]}>WANTED BOOKS</Text>
-            </TouchableOpacity>
+        <View style={styles.filter}>
+          <View style={styles.filterOptions}>
+              <TouchableOpacity style={styles.filterOptionButton} onPress={()=>{setFilter('owned')}}>
+                <Text style={[filter == 'owned' ? styles.selectedOption : styles.filterOption, {borderTopLeftRadius: 5, borderBottomLeftRadius: 5}]}>OWNED BOOKS</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.filterOptionButton} onPress={()=>{setFilter('requested')}}>
+                <Text style={[filter == 'requested' ? styles.selectedOption : styles.filterOption, {borderTopRightRadius: 5, borderBottomRightRadius: 5}]}>WANTED BOOKS</Text>
+              </TouchableOpacity>
+          </View>
         </View>
-        <BookList books={booksData} deleteBook={onLongPressBook} />
+        <BookList books={booksData} deleteBook={onLongPressBook} loadingBooks={loading} />
       </View>
       <Navigation params={props} />
     </View>
@@ -147,6 +164,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
     letterSpacing: 2,
     paddingBottom: 50
+  },
+  filter: {
+    borderBottomColor: Colors.lightGray,
+    borderBottomWidth: 1,
   },
   search: {
     marginTop: -30,
